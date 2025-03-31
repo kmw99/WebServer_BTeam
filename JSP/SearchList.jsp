@@ -34,7 +34,7 @@
 		
 		try {
 			String jdbcDriver = "jdbc:mysql://localhost:3306/null"
-					+ "useUnicode=true&characterEncoding=euckr"; //null 부분에 mysql 데베명 기입
+					+ "?useUnicode=true&characterEncoding=UTF-8"; //null 부분에 mysql 데베명 기입
 			String dbUser = "doublesid"; //sql id
 			String dbPass = "doublespw"; //sql pw
 			conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
@@ -88,6 +88,7 @@
 				try { conn.close(); }
 				catch(SQLException e) {}
 			}
+		}
 			//
 		%>
 	</table>
