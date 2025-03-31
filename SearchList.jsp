@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import = "java.sql.DriverManager" %>
 <%@ page import = "java.sql.Connection" %>
@@ -34,7 +35,7 @@
 		
 		try {
 			String jdbcDriver = "jdbc:mysql://localhost:3306/null"
-					+ "useUnicode=true&characterEncoding=euckr"; //null 부분에 mysql 데베명 기입
+					+ "?useUnicode=true&characterEncoding=UTF-8"; //null 부분에 mysql 데베명 기입
 			String dbUser = "doublesid"; //sql id
 			String dbPass = "doublespw"; //sql pw
 			conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
@@ -47,10 +48,9 @@
 				ps = conn.prepareStatement("SELECT * FROM places"); //모든 테이블 선택
 			}
 			else if(searchKey != null & searchValue != null) { //키 O, 값 O
-				ps = conn.prepareStatement("SELECT * FROM places where " + searchKey + "=?"); //해당 키 테이블 선택
+				ps = conn.prepareStatement("SELECT * FROM places WHERE " + searchKey + " LIKE %" + searchValue + "%"); //해당 키 테이블 선택
 				ps.setString(1, searchValue);
 			}
-			out.println("<br>" + ps + "<-- PreparedStatement");
 			//
 			
 			//검색값 토대로 테이블 출력
@@ -88,6 +88,7 @@
 				try { conn.close(); }
 				catch(SQLException e) {}
 			}
+		}
 			//
 		%>
 	</table>
