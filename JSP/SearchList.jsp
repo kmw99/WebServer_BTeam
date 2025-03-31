@@ -47,10 +47,9 @@
 				ps = conn.prepareStatement("SELECT * FROM places"); //모든 테이블 선택
 			}
 			else if(searchKey != null & searchValue != null) { //키 O, 값 O
-				ps = conn.prepareStatement("SELECT * FROM places where " + searchKey + "=?"); //해당 키 테이블 선택
+				ps = conn.prepareStatement("SELECT * FROM places WHERE " + searchKey + " LIKE %" + searchValue + "%"); //해당 키 테이블 선택
 				ps.setString(1, searchValue);
 			}
-			out.println("<br>" + ps + "<-- PreparedStatement");
 			//
 			
 			//검색값 토대로 테이블 출력
