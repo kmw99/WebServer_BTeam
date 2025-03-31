@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS transport (
 
 
 
-INSERT INTO contact_info ( address_id, category, name, address, description, images )
+INSERT INTO contact_info ( address_id, phone, website, opening_hours, entry_fee_type, entry_fee )
 	VALUES (1, '02-3455-9277, 9288', 'https://www.seoultower.co.kr/', '연중무휴 * 타워내 개별시설 운영시간 상이', '무료', '남산공원 입장료 없음(전망대 등 개별 이용시설 요금 별도)'),
 (2, '(안내) 02-2128-2800', 'http://www.sisul.or.kr/open_content/jangchung/', '평일 : 9:00 ~18:00 / 주말 : 경기 또는 행사시 운영시간에 따라 상이', '유료', '경기?행사 시마다 상이'),
 (3, '(공원안내) 02-820-9258', 'NULL', '운영 제한 없음', '무료', '무료'),
