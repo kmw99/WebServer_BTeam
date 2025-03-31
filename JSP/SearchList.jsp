@@ -47,8 +47,8 @@
 				ps = conn.prepareStatement("SELECT * FROM places"); //모든 테이블 선택
 			}
 			else if(searchKey != null & searchValue != null) { //키 O, 값 O
-				ps = conn.prepareStatement("SELECT * FROM places WHERE " + searchKey + " LIKE %" + searchValue + "%"); //해당 키 테이블 선택
-				ps.setString(1, searchValue);
+				ps = conn.prepareStatement("SELECT * FROM places WHERE " + searchKey + " LIKE ?"); //해당 키 테이블 선택
+				ps.setString(1, "%" + searchValue + "%");
 			}
 			//
 			
