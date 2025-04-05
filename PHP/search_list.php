@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 $servername = "localhost";
 $username = "dbuser";  // 실제 사용자명으로 변경
 $password = "dbpass";  // 실제 비밀번호로 변경
