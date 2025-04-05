@@ -18,7 +18,7 @@ $searchValue = $_GET['searchValue'] ?? '';
 $searchKey = $conn->real_escape_string($searchKey);
 $searchValue = $conn->real_escape_string($searchValue);
 
-$sql = "SELECT * FROM night_views WHERE $searchKey LIKE '%$searchValue%'";
+$sql = "SELECT * FROM places WHERE $searchKey LIKE '%$searchValue%'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
