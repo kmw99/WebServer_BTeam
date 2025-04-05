@@ -23,11 +23,12 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
   while($row = $result->fetch_assoc()) {
-    echo "<div>";
-    echo "<h3>" . htmlspecialchars($row["name"]) . "</h3>";
-    echo "<p>주소: " . htmlspecialchars($row["address"]) . "</p>";
-    echo "<p>설명: " . htmlspecialchars($row["description"]) . "</p>";
-    echo "</div>";
+    echo "<tr>";
+    echo "<td>" . htmlspecialchars($row["category"]) . "</td>";
+    echo "<td>" . htmlspecialchars($row["name"]) . "</td>";
+    echo "<td>" . htmlspecialchars($row["address"]) . "</td>";
+    echo "<td>" . htmlspecialchars($row["description"]) . "</td>";
+    echo "</tr>";
   }
 } else {
   echo "<p>일치하는 결과가 없습니다.</p>";
