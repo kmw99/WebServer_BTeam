@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
@@ -19,15 +18,6 @@
       font-size: 20px;
       font-weight: bold;
       color: white;
-    }
-    .main-title-bg {
-      background: rgba(0,0,0,0.5); /* 반투명 검정 */
-      padding: 32px 24px 24px 24px;
-      border-radius: 8px;
-      text-align: center;
-      margin-bottom: 32px;
-      box-sizing: border-box;
-      /* 필요하다면 max-width와 margin: 0 auto로 중앙정렬도 가능 */
     }
 
     /* 배경 이미지 슬라이드 구조 */
@@ -50,15 +40,15 @@
       transition: opacity 1.5s ease-in-out;
     }
     .bg-fade-img.img1 {
-      background-image: url('https://img.freepik.com/free-photo/downtown-cityscape-night-seoul-south-korea_335224-272.jpg?t=st=1745898981~exp=1745902581~hmac=bbbcfa064dcee3550a2c2072f41ef219dcc4a86353c9ecdc23ec4a267e308938&w=1380');
+      background-image: url('https://drive.google.com/thumbnail?id=1GtfyRlxmoHKhcS3ltBQyeMGSSOluDq7z&sz=w1000');
       animation-delay: 0s;
     }
     .bg-fade-img.img2 {
-      background-image: url('https://img.freepik.com/free-photo/seoul-cityscape-twilight-south-korea_335224-273.jpg?t=st=1745899408~exp=1745903008~hmac=651c92f2bc26ea182921406d3dc39b639214f57b7a961865b7927b5ba0faeae1&w=1380');
+      background-image: url('https://drive.google.com/thumbnail?id=1bDUMbrH3kZxhpWbB15O8B9nQiyQyFeiN&sz=w1000');
       animation-delay: 5s;
     }
     .bg-fade-img.img3 {
-      background-image: url('https://img.freepik.com/free-photo/gyeongbokgung-palace-night-seoul-korea_335224-483.jpg?t=st=1745899449~exp=1745903049~hmac=543bbe76cdfc067ab770eedcb3e45d8a132cc76e03f11e409c4bced9049952a3&w=1380');
+      background-image: url('https://drive.google.com/thumbnail?id=1Kyw0Sl-A1h_RG1y9aIK5mCRS7033jwDg&sz=w1000');
       animation-delay: 10s;
     }
     @keyframes bgfade {
@@ -69,39 +59,89 @@
       100% { opacity: 0; }
     }
 
-    /* 메인 컨텐츠는 배경 위에 */
-    .main {
-      width: 800px;
+    .top-left-box {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      padding: 18px 28px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1.5rem;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .top-right-box {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      padding: 18px 28px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1.2rem;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .bottom-center-box {
       position: absolute;
       left: 50%;
+      bottom: 40px;
       transform: translateX(-50%);
-      top: 150px;
-      z-index: 2;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      padding: 12px 48px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1.2rem;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      text-align: center;
     }
 
     #search-form {
       display: flex;
       justify-content: center;
-      margin-top: 60px;
-      position: relative;
+      align-items: flex-end;
+      width: 350px;
+      margin: 100px auto 0 auto;
+      border-bottom: 2px solid #222; /* 두꺼운 밑줄 */
+      padding-bottom: 10px;
+      background: transparent;
     }
+
     #search-input {
-      padding: 10px;
-      font-size: 16px;
       border: none;
-      border-radius: 5px 0 0 5px;
+      outline: none;
+      background: transparent;
+      font-size: 18px;
+      margin-right: auto;
+      color: #555;
+      width: 120px;
+      text-align: left;
     }
+
     #search-form button {
-      padding: 10px;
-      font-size: 16px;
       border: none;
-      border-radius: 0 5px 5px 0;
+      background: transparent;
+      font-size: 18px;
+      color: #555;
       cursor: pointer;
+      margin-left: auto;
     }
+
     #search-results {
       margin-top: 20px;
       border-top: 2px solid white;
     }
+
     #search-results div {
       margin-bottom: 10px;
       padding: 10px;
@@ -109,131 +149,245 @@
       border-radius: 5px;
       box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
+
     #search-results h3 {
       margin-top: 0;
     }
+
     #data-list {
       display: block;
     }
+
+    .gallery-container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 120px auto 160px auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+
+    .photo-card {
+      position: relative;
+      width: 240px;
+      height: 240px;
+      background: #17607a;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.18s;
+      display: flex;
+      align-items: center;      
+      justify-content: center;  
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      display: flex;
+      align-items: center;      
+      justify-content: center;  
+      opacity: 0;
+      font-size: 20px;
+      font-weight: 400;
+      text-align: center;
+      transition: opacity 0.25s;
+      padding: 0px;
+      pointer-events: none;    
+    }
+
+    .photo-card:hover .photo-overlay {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .photo-card:hover {
+      transform: scale(1.03);
+    }
+
+    .photo-card-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .photo-desc {
+      margin-top: 12px;
+      font-size: 18px;
+      color: #888;
+      text-align: center;
+      font-family: 'Noto Sans KR', sans-serif;
+      letter-spacing: -1px;
+    }
+
+    /* 로그인/회원가입 radio 토글 숨김 */
+    .hidden-toggle {
+      display: none;
+    }
+
+    /* 로그인/회원가입 폼 공통 스타일 */
+    .form-popup {
+      position: fixed;
+      top: 60px;
+      right: 20px;
+      width: 280px;
+      background: rgba(0,0,0,0.92);
+      color: #fff;
+      border-radius: 8px;
+      padding: 24px 20px 20px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+      z-index: 100;
+      display: none;
+      transition: opacity 0.2s;
+    }
+    .form-popup label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+    .form-popup input[type="text"],
+    .form-popup input[type="password"] {
+      width: 100%;
+      padding: 7px 10px 7px 10px;
+      margin-bottom: 14px;
+      border: none;
+      border-radius: 4px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+    .form-popup button,
+    .form-popup label[for="popup-signup"],
+    .form-popup label[for="popup-login"],
+    .form-popup label[for="popup-close"] {
+      width: 100%;
+      padding: 9px 0;
+      border: none;
+      border-radius: 4px;
+      background: #2186ae;
+      color: #fff;
+      font-size: 16px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      text-align: center;
+      display: block;
+      transition: background 0.15s;
+    }
+    .form-popup label[for="popup-close"] {
+      background: #888;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    .form-popup button:hover,
+    .form-popup label[for="popup-signup"]:hover,
+    .form-popup label[for="popup-login"]:hover,
+    .form-popup label[for="popup-close"]:hover {
+      background: #17607a;
+    }
+    #popup-login:checked ~ .form-popup.login-form { display: block; }
+    #popup-signup:checked ~ .form-popup.signup-form { display: block; }
+    #popup-close:checked ~ .form-popup.login-form,
+    #popup-close:checked ~ .form-popup.signup-form { display: none; }
   </style>
 </head>
-
 <body>
-  <!-- 배경 이미지 슬라이드 섹션 -->
+  <!-- radio 버튼 3개 (body 바로 아래) -->
+  <input type="radio" name="popup" id="popup-close" class="hidden-toggle" checked>
+  <input type="radio" name="popup" id="popup-login" class="hidden-toggle">
+  <input type="radio" name="popup" id="popup-signup" class="hidden-toggle">
+
+  <!-- 로그인/회원가입 버튼 (body 바로 아래) -->
+  <label for="popup-login" class="top-right-box">로그인/회원가입</label>
+
+  <!-- 로그인 폼 (body 바로 아래) -->
+  <div class="form-popup login-form">
+    <form autocomplete="off" onsubmit="return false;">
+      <label for="login-id">아이디</label>
+      <input type="text" id="login-id" name="login-id" autocomplete="username">
+      <label for="login-pw">비밀번호</label>
+      <input type="password" id="login-pw" name="login-pw" autocomplete="current-password">
+      <button type="submit">로그인</button>
+      <label for="popup-signup" style="background:#444; margin-bottom:0; margin-top:8px; cursor:pointer;">회원가입</label>
+      <label for="popup-close" style="background:#888; margin-bottom:0; margin-top:8px; cursor:pointer;">닫기</label>
+    </form>
+  </div>
+
+  <!-- 회원가입 폼 (body 바로 아래) -->
+  <div class="form-popup signup-form">
+    <form autocomplete="off" onsubmit="return false;">
+      <label for="signup-id">아이디</label>
+      <input type="text" id="signup-id" name="signup-id" autocomplete="username">
+      <label for="signup-pw">비밀번호</label>
+      <input type="password" id="signup-pw" name="signup-pw" autocomplete="new-password">
+      <label for="signup-pw-confirm">비밀번호 확인</label>
+      <input type="password" id="signup-pw-confirm" name="signup-pw-confirm" autocomplete="new-password">
+      <label for="popup-login" style="background:#444; margin-bottom:0; margin-top:8px; cursor:pointer;">회원가입 완료</label>
+      <label for="popup-close" style="background:#888; margin-bottom:0; margin-top:8px; cursor:pointer;">닫기</label>
+    </form>
+  </div>
+
+  <!-- section-with-background 및 나머지 컨텐츠는 아래에 둡니다 -->
   <div class="section-with-background">
     <div class="bg-fade-img img1"></div>
     <div class="bg-fade-img img2"></div>
     <div class="bg-fade-img img3"></div>
-    <div class="main">
-      <div class="main-title-bg">
-        <div class="title">
-          서울 야경명소
-        </div>
-        <div class="subtitle">
-          서울 야경 명소 약 50여가지에 대한 정보를 공유해드리는 사이트입니다.
-        </div>
-      <form id="search-form" action="SearchList.jsp" method="get">
-        <select name="searchKey" id="search-key">
-          <option value="name">장소명</option>
-          <option value="address">주소</option>
-        </select>
-        <input type="search" name="searchValue" id="search-input" placeholder="검색어 입력" />
-        <button type="submit">검색</button>
-      </form>
+    <a href="file:///c%3A/WebServer_BTeam/JSP/test_information.html" style="text-decoration:none;">
+      <div class="top-left-box" style="cursor:pointer; padding:0; background:transparent; box-shadow:none;">
+        <img src="https://drive.google.com/thumbnail?id=1ZmRjZh33NOS-L9Anxc-DLavyhiOOIbgg&sz=w1000" style="height:80px; display:block;">
+      </div>
+    </a>
+    <div class="bottom-center-box">서울의 야경 명소를 구경하세요</div>
+  </div>
+
+  <!--검색창 있는 섹션-->
+  <form id="search-form" action="SearchList.jsp" method="get">
+    <select name="searchKey" id="search-key">
+      <option value="name">장소명</option>
+      <option value="address">주소</option>
+    </select>
+    <input type="search" name="searchValue" id="search-input" placeholder="검색어 입력" />
+    <button type="submit">검색</button>
+  </form>
+
+  <div class="gallery-container">
+    <div class="photo-card-wrap">
+      <div class="photo-card">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="남산타워" />
+        <div class="photo-overlay">설명1</div>
+      </div>
+      <div class="photo-desc">장소1</div>
+    </div>
+    <div class="photo-card-wrap">
+      <div class="photo-card">
+        <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="한강" />
+        <div class="photo-overlay">설명2</div>
+      </div>
+      <div class="photo-desc">장소2</div>
+    </div>
+    <div class="photo-card-wrap">
+      <div class="photo-card">
+        <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" alt="롯데타워" />
+        <div class="photo-overlay">설명3</div>
+      </div>
+      <div class="photo-desc">장소3</div>
+    </div>
+    <div class="photo-card-wrap">
+      <div class="photo-card">
+        <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=400&q=80" alt="북악스카이웨이" />
+        <div class="photo-overlay">설명4</div>
+      </div>
+      <div class="photo-desc">장소4</div>
     </div>
   </div>
-  
-  <!-- 데이터가 표시되는 컨테이너 -->
-  <div class="content-container">
-    <!-- 검색 결과가 표시되는 영역 -->
-    <div id="search-results"></div>
-    <!-- 데이터 목록이 표시되는 영역 -->
-    <div id="data-list"></div>
-  </div>
-<!--
-  <script>
-    // 예시 데이터 (실제로는 외부 데이터베이스나 API에서 가져올 수 있음)
-    const bookData = [
-      {
-        "title": "책 제목 1",
-        "author": "저자 1",
-        "publisher": "출판사 1"
-      },
-      {
-        "title": "책 제목 2",
-        "author": "저자 2",
-        "publisher": "출판사 2"
-      },
-      {
-        "title": "책 제목 3",
-        "author": "저자 3",
-        "publisher": "출판사 3"
-      }
-    ];
-
-    // 페이지 로드 시 데이터 출력 함수
-    function displayAllData() {
-      // 검색 결과가 표시되는 요소
-      const searchResults = document.getElementById('search-results');
-      searchResults.innerHTML = ''; // 검색 결과 초기화
-      
-      // 데이터를 반복하여 검색 결과에 추가
-      bookData.forEach(book => {
-        const resultHTML = `
-            <div>
-                <h3>${book.title}</h3>
-                <p>저자: ${book.author}</p>
-                <p>출판사: ${book.publisher}</p>
-            </div>
-        `;
-        searchResults.insertAdjacentHTML('beforeend', resultHTML);
-      });
-    }
-
-    // 초기 데이터 출력
-    displayAllData();
-
-    // 검색 폼 제출 이벤트 처리
-    document.getElementById('search-form').addEventListener('submit', function(event) {
-      event.preventDefault(); // 기본 폼 제출 동작 방지
-      
-      // 검색 입력 필드의 값 가져오기
-      const searchInput = document.getElementById('search-input').value.toLowerCase();
-      
-      // 검색 결과가 표시되는 요소
-      const searchResults = document.getElementById('search-results');
-      const dataList = document.getElementById('data-list');
-      
-      // 기존 데이터 숨기기
-      dataList.style.display = 'none';
-      
-      // 검색 결과 초기화
-      searchResults.innerHTML = '';
-      
-      // 검색어와 일치하는 책 제목 찾기
-      let found = false;
-      bookData.forEach(book => {
-        if (searchInput === '' || book.title.toLowerCase().includes(searchInput)) {
-          // 검색 결과를 HTML에 추가
-          const resultHTML = `
-              <div>
-                  <h3>${book.title}</h3>
-                  <p>저자: ${book.author}</p>
-                  <p>출판사: ${book.publisher}</p>
-              </div>
-          `;
-          searchResults.insertAdjacentHTML('beforeend', resultHTML);
-          found = true;
-        }
-      });
-      
-      // 검색 결과가 없으면 메시지 표시
-      if (!found) {
-        searchResults.innerHTML = '<p>일치하는 정보가 없습니다.</p>';
-      }
-    });
-  </script>
--->
 </body>
-
 </html>
