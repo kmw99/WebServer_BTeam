@@ -124,7 +124,7 @@
       gap: 24px;
     }
 
-    .result-box {
+    .pickresult-box {
       display: flex;
       align-items: center;
       background: white;
@@ -138,13 +138,13 @@
       transition: box-shadow 0.3s, transform 0.3s;
     }
 
-    .result-box:hover {
+    .pickresult-box:hover {
       box-shadow: 0 8px 24px rgba(33,33,33,0.18);
       transform: scale(1.03);
       cursor: pointer;
     }
 
-    .place-photo {
+    .pickplace-photo {
       width: 150px;
       height: 150px;
       object-fit: cover;
@@ -152,7 +152,7 @@
       background: #fff;
     }
 
-    .place-info {
+    .pickplace-info {
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -161,13 +161,13 @@
       width: 100%;
     }
     /*장소명*/
-    .place-name {
+    .pickplace-name {
       font-weight: bold;
       font-size: 1.3rem;
       margin-right: 80px;
     }
     /*즐겨찾기 버튼*/
-    .place-name-row {
+    .pickplace-name-row {
       display: flex;
       align-items: center;
       justify-content: space-between; /* 좌우 끝으로 정렬 */
@@ -175,11 +175,11 @@
       width: 100%;  
     }
     /*주소명*/
-    .place-address {
+    .pickplace-address {
       font-size: 1rem;
     }
     /*즐겨찾기 버튼 크기*/
-    .side-icon {
+    .pickside-icon {
       width: 32px;   
       height: 32px;
       object-fit: contain;
@@ -273,21 +273,21 @@
     <p class="pick-desc">관심 장소를 한눈에 확인하고 관리하세요!</p>
 
     <!--검색 결과 나오는 섹션-->
-  <div class="result-box">
-    <img class="place-photo" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="장소 사진">
-    <div class="place-info">
-      <div class="place-name-row">
-        <span class="place-name">장소명</span>
+  <div class="pickresult-box">
+    <img class="pickplace-photo" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="장소 사진">
+    <div class="pickplace-info">
+      <div class="pickplace-name-row">
+        <span class="pickplace-name">장소명</span>
         <img
           id="sideIcon"
-          class="side-icon"
+          class="pickside-icon"
           src="https://drive.google.com/thumbnail?id=194oCvn-FOQTQWFqpvmjXa3KZ6pL-LwFu&sz=w1000"
           alt="즐겨찾기"
           onclick="toggleIcon()"
           style="cursor:pointer;"
         >
       </div>
-      <div class="place-address">주소</div>
+      <div class="pickplace-address">주소</div>
     </div>
   </div>
 
