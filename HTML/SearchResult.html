@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <style>
+    .top-left-box {
+      position: fixed;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      padding: 18px 28px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1.5rem;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .top-right-box {
+      position: fixed;
+      background: rgba(0,0,0,0.5);
+      top: 10px;
+      right: 10px;
+      color: #fff;
+      padding: 18px 28px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1.2rem;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    #search-form {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      width: 350px;
+      margin: 100px auto 0 auto;
+      border-bottom: 2px solid #222; /* 두꺼운 밑줄 */
+      padding-bottom: 10px;
+      background: transparent;
+    }
+
+    #search-input {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 18px;
+      margin-right: auto;
+      color: #555;
+      width: 120px;
+      text-align: left;
+    }
+
+    #search-form button {
+      border: none;
+      background: transparent;
+      font-size: 18px;
+      color: #555;
+      cursor: pointer;
+      margin-left: auto;
+    }
+
+    #search-results {
+      margin-top: 20px;
+      border-top: 2px solid white;
+    }
+
+    #search-results div {
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    #search-results h3 {
+      margin-top: 0;
+    }
+
+    #data-list {
+      display: block;
+    }
+
+    /* 로그인/회원가입 radio 토글 숨김 */
+    .hidden-toggle {
+      display: none;
+    }
+
+    /* 로그인/회원가입 폼 공통 스타일 */
+    .form-popup {
+      position: fixed;
+      top: 60px;
+      right: 20px;
+      width: 280px;
+      background: rgba(0,0,0,0.92);
+      color: #fff;
+      border-radius: 8px;
+      padding: 24px 20px 20px 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+      z-index: 100;
+      display: none;
+      transition: opacity 0.2s;
+    }
+    .form-popup label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+    .form-popup input[type="text"],
+    .form-popup input[type="password"] {
+      width: 100%;
+      padding: 7px 10px 7px 10px;
+      margin-bottom: 14px;
+      border: none;
+      border-radius: 4px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+    .form-popup button,
+    .form-popup label[for="popup-signup"],
+    .form-popup label[for="popup-login"],
+    .form-popup label[for="popup-close"] {
+      width: 100%;
+      padding: 9px 0;
+      border: none;
+      border-radius: 4px;
+      background: #2186ae;
+      color: #fff;
+      font-size: 16px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      text-align: center;
+      display: block;
+      transition: background 0.15s;
+    }
+    .form-popup label[for="popup-close"] {
+      background: #888;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    .form-popup button:hover,
+    .form-popup label[for="popup-signup"]:hover,
+    .form-popup label[for="popup-login"]:hover,
+    .form-popup label[for="popup-close"]:hover {
+      background: #17607a;
+    }
+    #popup-login:checked ~ .form-popup.login-form { display: block; }
+    #popup-signup:checked ~ .form-popup.signup-form { display: block; }
+    #popup-close:checked ~ .form-popup.login-form,
+    #popup-close:checked ~ .form-popup.signup-form { display: none; }
+
+    #search-results {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .result-box {
+      background: white;
+      border-radius: 12px;
+      margin: 40px auto;
+      padding: 32px 32px 24px 32px;
+      width: 800px;
+      box-sizing: border-box;
+      color: black;
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .place-photo {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #fff;
+      border: 2px solid #fff;
+      flex-shrink: 0;
+    }
+
+    .place-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 1.1rem;
+    }
+
+    /*장소명*/
+    .place-name {
+      font-weight: bold;
+      font-size: 1.3rem;
+      margin-right: 80px;
+    }
+    
+    /*즐겨찾기 버튼*/
+    .place-name-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between; /* 좌우 끝으로 정렬 */
+      margin-bottom: 10px;
+      width: 100%;  
+    }
+    
+    /*주소명*/
+    .place-address {
+      font-size: 1rem;
+    }
+    
+    /*즐겨찾기 버튼 크기*/
+    .side-icon {
+      width: 32px;   
+      height: 32px;
+      object-fit: contain;
+    }
+
+    .place-homepage a {
+      color: blue;
+      text-decoration: underline;
+    }
+
+    .place-map {
+      background: #fff;
+      color: #333;
+      margin-top: 36px;
+      border-radius: 8px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .site-footer {
+      width: 100%;
+      background: #222;
+      color: #fff;
+      padding: 18px 0;
+      position: relative;
+      margin-top: 60px;
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+
+    .footer-content {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      align-items: center;
+      text-align: center;
+    }
+    
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .site-footer {
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- radio 버튼 3개 (body 바로 아래) -->
+  <input type="radio" name="popup" id="popup-close" class="hidden-toggle" checked>
+  <input type="radio" name="popup" id="popup-login" class="hidden-toggle">
+  <input type="radio" name="popup" id="popup-signup" class="hidden-toggle">
+
+  <!-- 로그인/회원가입 버튼 (body 바로 아래) -->
+  <label for="popup-login" class="top-right-box">로그인/회원가입</label>
+
+  <!-- 로그인 폼 (body 바로 아래) -->
+  <div class="form-popup login-form">
+    <form autocomplete="off" onsubmit="return false;">
+      <label for="login-id">아이디</label>
+      <input type="text" id="login-id" name="login-id" autocomplete="username">
+      <label for="login-pw">비밀번호</label>
+      <input type="password" id="login-pw" name="login-pw" autocomplete="current-password">
+      <button type="submit">로그인</button>
+      <label for="popup-signup" style="background:#444; margin-bottom:0; margin-top:8px; cursor:pointer;">회원가입</label>
+      <label for="popup-close" style="background:#888; margin-bottom:0; margin-top:8px; cursor:pointer;">닫기</label>
+    </form>
+  </div>
+
+  <!-- 회원가입 폼 (body 바로 아래) -->
+  <div class="form-popup signup-form">
+    <form autocomplete="off" onsubmit="return false;">
+      <label for="signup-id">아이디</label>
+      <input type="text" id="signup-id" name="signup-id" autocomplete="username">
+      <label for="signup-pw">비밀번호</label>
+      <input type="password" id="signup-pw" name="signup-pw" autocomplete="new-password">
+      <label for="signup-pw-confirm">비밀번호 확인</label>
+      <input type="password" id="signup-pw-confirm" name="signup-pw-confirm" autocomplete="new-password">
+      <label for="popup-login" style="background:#444; margin-bottom:0; margin-top:8px; cursor:pointer;">회원가입 완료</label>
+      <label for="popup-close" style="background:#888; margin-bottom:0; margin-top:8px; cursor:pointer;">닫기</label>
+    </form>
+  </div>
+
+  <!-- section-with-background 및 나머지 컨텐츠는 아래에 둡니다 -->
+  <div class="section-with-background">
+    <a href="file:///c%3A/WebServer_BTeam/JSP/test_information.html" style="text-decoration:none;">
+      <div class="top-left-box" style="cursor:pointer; padding:0; background:transparent; box-shadow:none;">
+        <img src="https://drive.google.com/thumbnail?id=1ZmRjZh33NOS-L9Anxc-DLavyhiOOIbgg&sz=w1000" style="height:120px; display:block;">
+      </div>
+    </a>
+  </div>
+
+  <!--검색창 있는 섹션-->
+  <form id="search-form" action="SearchList.jsp" method="get">
+    <select name="searchKey" id="search-key">
+      <option value="name">장소명</option>
+      <option value="address">주소</option>
+    </select>
+    <input type="search" name="searchValue" id="search-input" placeholder="검색어 입력" />
+    <button type="submit">검색</button>
+  </form>
+
+  <!--검색 결과 나오는 섹션-->
+  <div class="result-box">
+    <img class="place-photo" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="장소 사진">
+    <div class="place-info">
+      <div class="place-name-row">
+        <span class="place-name">장소명</span>
+        <img
+          id="sideIcon"
+          class="side-icon"
+          src="https://drive.google.com/thumbnail?id=1wSVy1uCzkvqWD3DzC5HDGV4p-UyXoIvl&sz=w1000"
+          alt="즐겨찾기"
+          onclick="toggleIcon()"
+          style="cursor:pointer;"
+        >
+      </div>
+      <div class="place-address">주소</div>
+      <div class="place-contact">연락처</div>
+      <div class="place-homepage">홈페이지: <a href="https://seoulforest.or.kr" target="_blank">https://seoulforest.or.kr</a></div>
+      <div class="place-traffic">교통편</div>
+      <div class="place-hours">운영시간</div>
+      <div class="place-parking">주차</div>
+      <div class="place-map">
+        <!-- 지도 API 자리 -->
+        지도 API 자리
+      </div>
+    </div>
+  </div>
+
+  <!--밑에 footer-->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <span>Websever_B</span>
+      <span>상명대 게임전공 웹서버개발</span>
+    </div>
+  </footer>
+</body>
+<!--즐겨찾기 버튼 눌렀을 때 이미지 바뀌는 코드-->
+<script>
+    const img1 = "https://drive.google.com/thumbnail?id=1wSVy1uCzkvqWD3DzC5HDGV4p-UyXoIvl&sz=w1000";
+    const img2 = "https://drive.google.com/thumbnail?id=194oCvn-FOQTQWFqpvmjXa3KZ6pL-LwFu&sz=w1000";
+    
+    function toggleIcon() {
+      const icon = document.getElementById("sideIcon");
+      if (icon.getAttribute('src') === img1) {
+        icon.setAttribute('src', img2);
+      } else {
+        icon.setAttribute('src', img1);
+      }
+    }
+  </script>
+</html>

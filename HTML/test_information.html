@@ -61,8 +61,6 @@
 
     .top-left-box {
       position: fixed;
-      top: 10px;
-      left: 10px;
       background: rgba(0,0,0,0.5);
       color: #fff;
       padding: 18px 28px;
@@ -75,9 +73,8 @@
 
     .top-right-box {
       position: fixed;
-      top: 10px;
-      right: 10px;
       background: rgba(0,0,0,0.5);
+      right: 8px;
       color: #fff;
       padding: 18px 28px;
       border: none;
@@ -161,7 +158,7 @@
     .gallery-container {
       width: 90%;
       max-width: 1200px;
-      margin: 120px auto 160px auto;
+      margin: 120px auto 100px auto;
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
@@ -298,6 +295,28 @@
     #popup-signup:checked ~ .form-popup.signup-form { display: block; }
     #popup-close:checked ~ .form-popup.login-form,
     #popup-close:checked ~ .form-popup.signup-form { display: none; }
+    
+    .site-footer {
+      width: 100%;
+      background: #222;
+      color: #fff;
+      padding: 18px 0;
+      position: relative;
+      margin-top: 60px;
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+
+    .footer-content {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      align-items: center;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -343,7 +362,7 @@
     <div class="bg-fade-img img3"></div>
     <a href="file:///c%3A/WebServer_BTeam/JSP/test_information.html" style="text-decoration:none;">
       <div class="top-left-box" style="cursor:pointer; padding:0; background:transparent; box-shadow:none;">
-        <img src="https://drive.google.com/thumbnail?id=1ZmRjZh33NOS-L9Anxc-DLavyhiOOIbgg&sz=w1000" style="height:80px; display:block;">
+        <img src="https://drive.google.com/thumbnail?id=1ZmRjZh33NOS-L9Anxc-DLavyhiOOIbgg&sz=w1000" style="height:120px; display:block;">
       </div>
     </a>
     <div class="bottom-center-box">서울의 야경 명소를 구경하세요</div>
@@ -389,5 +408,13 @@
       <div class="photo-desc">장소4</div>
     </div>
   </div>
+
+  <!--밑에 footer-->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <span>Websever_B</span>
+      <span>상명대 게임전공 웹서버개발</span>
+    </div>
+  </footer>
 </body>
 </html>
