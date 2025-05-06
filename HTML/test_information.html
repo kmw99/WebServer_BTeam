@@ -29,7 +29,6 @@
     }
     .bg-fade-img {
       position: absolute;
-      top: 0; left: 0;
       width: 100%; height: 100%;
       background-size: cover;
       background-position: center;
@@ -62,6 +61,8 @@
     .top-left-box {
       position: fixed;
       background: rgba(0,0,0,0.5);
+      top: 8px;
+      left: 8px;
       color: #fff;
       padding: 18px 28px;
       border: none;
@@ -70,21 +71,50 @@
       z-index: 10;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
-
-    .top-right-box {
+    .top-buttons {
       position: fixed;
-      background: rgba(0,0,0,0.5);
+      top: 8px;
       right: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 10;
+    }
+    .favorite-link {
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 18px 28px; /* 로그인 버튼과 동일한 패딩 */
+      border-radius: 4px;
+      background: rgba(0,0,0,0.5); /* 로그인 버튼과 동일한 배경 */
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      height: 44px; /* 로그인 버튼과 동일한 높이 */
+      text-decoration: none;
+      user-select: none;
+    }
+    .favorite-link:hover {
+      background: rgba(0,0,0,0.7); /* hover 시 배경 진하게 */
+    }
+    .top-right-box {
+      background: rgba(0,0,0,0.5);
       color: #fff;
       padding: 18px 28px;
       border: none;
       border-radius: 4px;
       font-size: 1.2rem;
-      z-index: 10;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       text-align: center;
       cursor: pointer;
       user-select: none;
+      display: flex;
+      align-items: center;
+      height: 44px;
+      transition: background 0.15s;
+    }
+    .top-right-box:hover {
+      background: rgba(0,0,0,0.7);
     }
 
     .bottom-center-box {
@@ -158,7 +188,7 @@
     .gallery-container {
       width: 90%;
       max-width: 1200px;
-      margin: 120px auto 100px auto;
+      margin: 120px auto 140px auto;
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
@@ -236,8 +266,8 @@
     /* 로그인/회원가입 폼 공통 스타일 */
     .form-popup {
       position: fixed;
-      top: 60px;
-      right: 20px;
+      top: 90px;
+      right: 10px;
       width: 280px;
       background: rgba(0,0,0,0.92);
       color: #fff;
@@ -325,8 +355,13 @@
   <input type="radio" name="popup" id="popup-login" class="hidden-toggle">
   <input type="radio" name="popup" id="popup-signup" class="hidden-toggle">
 
-  <!-- 로그인/회원가입 버튼 (body 바로 아래) -->
-  <label for="popup-login" class="top-right-box">로그인/회원가입</label>
+  <!-- 상단 오른쪽 버튼 그룹 -->
+  <div class="top-buttons">
+    <a href="file:///c:/WebServer_BTeam/HTML/PickList.html" class="favorite-link">
+      즐겨찾기 목록
+    </a>
+    <label for="popup-login" class="top-right-box">로그인/회원가입</label>
+  </div>
 
   <!-- 로그인 폼 (body 바로 아래) -->
   <div class="form-popup login-form">
@@ -360,7 +395,7 @@
     <div class="bg-fade-img img1"></div>
     <div class="bg-fade-img img2"></div>
     <div class="bg-fade-img img3"></div>
-    <a href="file:///c%3A/WebServer_BTeam/JSP/test_information.html" style="text-decoration:none;">
+    <a href="file:///c%3A/WebServer_BTeam/HTML/test_information.html" style="text-decoration:none;">
       <div class="top-left-box" style="cursor:pointer; padding:0; background:transparent; box-shadow:none;">
         <img src="https://drive.google.com/thumbnail?id=1ZmRjZh33NOS-L9Anxc-DLavyhiOOIbgg&sz=w1000" style="height:120px; display:block;">
       </div>
@@ -381,31 +416,27 @@
   <div class="gallery-container">
     <div class="photo-card-wrap">
       <div class="photo-card">
-        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="남산타워" />
-        <div class="photo-overlay">설명1</div>
+        <img src="https://drive.google.com/thumbnail?id=1hMuBSOaMERmYrWJSYSICH_Ppec9wJBaq&sz=w1000" alt="광화문" />
+        <div class="photo-overlay">광화문 광장</div>
       </div>
-      <div class="photo-desc">장소1</div>
     </div>
     <div class="photo-card-wrap">
       <div class="photo-card">
-        <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="한강" />
-        <div class="photo-overlay">설명2</div>
+        <img src="https://drive.google.com/thumbnail?id=1ay1mO0_LzfuWaNseZjQOKzPKd_68yMh6&sz=w1000" alt="DDP" />
+        <div class="photo-overlay">DDP</div>
       </div>
-      <div class="photo-desc">장소2</div>
     </div>
     <div class="photo-card-wrap">
       <div class="photo-card">
-        <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" alt="롯데타워" />
-        <div class="photo-overlay">설명3</div>
+        <img src="https://drive.google.com/thumbnail?id=1_gmBPieuK-4U4JdeYGI0iFZ6NiEi3F61&sz=w1000" alt="숭례문" />
+        <div class="photo-overlay">숭례문</div>
       </div>
-      <div class="photo-desc">장소3</div>
     </div>
     <div class="photo-card-wrap">
       <div class="photo-card">
-        <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=400&q=80" alt="북악스카이웨이" />
-        <div class="photo-overlay">설명4</div>
+        <img src="https://drive.google.com/thumbnail?id=1qrkiHIggGdhr_R5mPYSA614yIgBedW3o&sz=w1000" alt="남산공원" />
+        <div class="photo-overlay">남산 공원</div>
       </div>
-      <div class="photo-desc">장소4</div>
     </div>
   </div>
 
