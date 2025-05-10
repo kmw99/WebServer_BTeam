@@ -6,58 +6,6 @@
   <title>replit</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
   <style>
-    .title {
-      text-align: center;
-      font-size: 60px;
-      font-weight: bold;
-      color: white;
-      margin-top: 20px;
-    }
-    .subtitle {
-      text-align: center;
-      font-size: 20px;
-      font-weight: bold;
-      color: white;
-    }
-
-    /* 배경 이미지 슬라이드 구조 */
-    .section-with-background {
-      position: relative;
-      height: 100vh;
-      margin-top: 0px;
-      overflow: hidden;
-    }
-    .bg-fade-img {
-      position: absolute;
-      width: 100%; height: 100%;
-      background-size: cover;
-      background-position: center;
-      opacity: 0;
-      animation: bgfade 15s infinite;
-      animation-timing-function: ease-in-out;
-      z-index: 1;
-      transition: opacity 1.5s ease-in-out;
-    }
-    .bg-fade-img.img1 {
-      background-image: url('https://drive.google.com/thumbnail?id=1GtfyRlxmoHKhcS3ltBQyeMGSSOluDq7z&sz=w1000');
-      animation-delay: 0s;
-    }
-    .bg-fade-img.img2 {
-      background-image: url('https://drive.google.com/thumbnail?id=1bDUMbrH3kZxhpWbB15O8B9nQiyQyFeiN&sz=w1000');
-      animation-delay: 5s;
-    }
-    .bg-fade-img.img3 {
-      background-image: url('https://drive.google.com/thumbnail?id=1Kyw0Sl-A1h_RG1y9aIK5mCRS7033jwDg&sz=w1000');
-      animation-delay: 10s;
-    }
-    @keyframes bgfade {
-      0%   { opacity: 0; }
-      5%   { opacity: 1; }
-      33%  { opacity: 1; }
-      43%  { opacity: 0; }
-      100% { opacity: 0; }
-    }
-
     .top-left-box {
       position: fixed;
       background: rgba(0,0,0,0.5);
@@ -117,22 +65,6 @@
       background: rgba(0,0,0,0.7);
     }
 
-    .bottom-center-box {
-      position: absolute;
-      left: 50%;
-      bottom: 40px;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.5);
-      color: #fff;
-      padding: 12px 48px;
-      border: none;
-      border-radius: 4px;
-      font-size: 1.2rem;
-      z-index: 10;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      text-align: center;
-    }
-
     #search-form {
       display: flex;
       justify-content: center;
@@ -185,79 +117,6 @@
       display: block;
     }
 
-    .gallery-container {
-      width: 90%;
-      max-width: 1200px;
-      margin: 120px auto 140px auto;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 40px;
-    }
-
-    .photo-card {
-      position: relative;
-      width: 240px;
-      height: 240px;
-      background: #17607a;
-      border-radius: 4px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.18s;
-      display: flex;
-      align-items: center;      
-      justify-content: center;  
-    }
-
-    .photo-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .photo-overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
-      color: #fff;
-      display: flex;
-      align-items: center;      
-      justify-content: center;  
-      opacity: 0;
-      font-size: 20px;
-      font-weight: 400;
-      text-align: center;
-      transition: opacity 0.25s;
-      padding: 0px;
-      pointer-events: none;    
-    }
-
-    .photo-card:hover .photo-overlay {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .photo-card:hover {
-      transform: scale(1.03);
-    }
-
-    .photo-card-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .photo-desc {
-      margin-top: 12px;
-      font-size: 18px;
-      color: #888;
-      text-align: center;
-      font-family: 'Noto Sans KR', sans-serif;
-      letter-spacing: -1px;
-    }
-
     /* 로그인/회원가입 radio 토글 숨김 */
     .hidden-toggle {
       display: none;
@@ -266,8 +125,8 @@
     /* 로그인/회원가입 폼 공통 스타일 */
     .form-popup {
       position: fixed;
-      top: 90px;
-      right: 10px;
+      top: 60px;
+      right: 20px;
       width: 280px;
       background: rgba(0,0,0,0.92);
       color: #fff;
@@ -325,7 +184,91 @@
     #popup-signup:checked ~ .form-popup.signup-form { display: block; }
     #popup-close:checked ~ .form-popup.login-form,
     #popup-close:checked ~ .form-popup.signup-form { display: none; }
+
+    #search-results {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .result-box {
+      background: white;
+      border-radius: 12px;
+      margin: 40px auto;
+      padding: 32px 32px 24px 32px;
+      width: 800px;
+      box-sizing: border-box;
+      color: black;
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .place-photo {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #fff;
+      border: 2px solid #fff;
+      flex-shrink: 0;
+    }
+
+    .place-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 1.1rem;
+    }
+
+    /*장소명*/
+    .place-name {
+      font-weight: bold;
+      font-size: 1.3rem;
+      margin-right: 80px;
+    }
     
+    /*즐겨찾기 버튼*/
+    .place-name-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between; /* 좌우 끝으로 정렬 */
+      margin-bottom: 10px;
+      width: 100%;  
+    }
+    
+    /*주소명*/
+    .place-address {
+      font-size: 1rem;
+    }
+    
+    /*즐겨찾기 버튼 크기*/
+    .side-icon {
+      width: 32px;   
+      height: 32px;
+      object-fit: contain;
+    }
+
+    .place-homepage a {
+      color: blue;
+      text-decoration: underline;
+    }
+
+    .place-map {
+      background: #fff;
+      color: #333;
+      margin-top: 36px;
+      border-radius: 8px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
     .site-footer {
       width: 100%;
       background: #222;
@@ -346,6 +289,22 @@
       gap: 32px;
       align-items: center;
       text-align: center;
+    }
+    
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .site-footer {
+      margin-top: auto;
     }
   </style>
 </head>
@@ -392,15 +351,11 @@
 
   <!-- section-with-background 및 나머지 컨텐츠는 아래에 둡니다 -->
   <div class="section-with-background">
-    <div class="bg-fade-img img1"></div>
-    <div class="bg-fade-img img2"></div>
-    <div class="bg-fade-img img3"></div>
     <a href="file:///c%3A/WebServer_BTeam/HTML/test_information.html" style="text-decoration:none;">
       <div class="top-left-box" style="cursor:pointer; padding:0; background:transparent; box-shadow:none;">
         <img src="https://drive.google.com/thumbnail?id=1ZmRjZh33NOS-L9Anxc-DLavyhiOOIbgg&sz=w1000" style="height:120px; display:block;">
       </div>
     </a>
-    <div class="bottom-center-box">서울의 야경 명소를 구경하세요</div>
   </div>
 
   <!--검색창 있는 섹션-->
@@ -413,29 +368,30 @@
     <button type="submit">검색</button>
   </form>
 
-  <div class="gallery-container">
-    <div class="photo-card-wrap">
-      <div class="photo-card">
-        <img src="https://drive.google.com/thumbnail?id=1hMuBSOaMERmYrWJSYSICH_Ppec9wJBaq&sz=w1000" alt="광화문" />
-        <div class="photo-overlay">광화문 광장</div>
+  <!--검색 결과 나오는 섹션-->
+  <div class="result-box">
+    <img class="place-photo" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="장소 사진">
+    <div class="place-info">
+      <div class="place-name-row">
+        <span class="place-name">장소명</span>
+        <img
+          id="sideIcon"
+          class="side-icon"
+          src="https://drive.google.com/thumbnail?id=1wSVy1uCzkvqWD3DzC5HDGV4p-UyXoIvl&sz=w1000"
+          alt="즐겨찾기"
+          onclick="toggleIcon()"
+          style="cursor:pointer;"
+        >
       </div>
-    </div>
-    <div class="photo-card-wrap">
-      <div class="photo-card">
-        <img src="https://drive.google.com/thumbnail?id=1ay1mO0_LzfuWaNseZjQOKzPKd_68yMh6&sz=w1000" alt="DDP" />
-        <div class="photo-overlay">DDP</div>
-      </div>
-    </div>
-    <div class="photo-card-wrap">
-      <div class="photo-card">
-        <img src="https://drive.google.com/thumbnail?id=1_gmBPieuK-4U4JdeYGI0iFZ6NiEi3F61&sz=w1000" alt="숭례문" />
-        <div class="photo-overlay">숭례문</div>
-      </div>
-    </div>
-    <div class="photo-card-wrap">
-      <div class="photo-card">
-        <img src="https://drive.google.com/thumbnail?id=1qrkiHIggGdhr_R5mPYSA614yIgBedW3o&sz=w1000" alt="남산공원" />
-        <div class="photo-overlay">남산 공원</div>
+      <div class="place-address">주소</div>
+      <div class="place-contact">연락처</div>
+      <div class="place-homepage">홈페이지: <a href="https://seoulforest.or.kr" target="_blank">https://seoulforest.or.kr</a></div>
+      <div class="place-traffic">교통편</div>
+      <div class="place-hours">운영시간</div>
+      <div class="place-parking">주차</div>
+      <div class="place-map">
+        <!-- 지도 API 자리 -->
+        지도 API 자리
       </div>
     </div>
   </div>
@@ -448,4 +404,18 @@
     </div>
   </footer>
 </body>
+<!--즐겨찾기 버튼 눌렀을 때 이미지 바뀌는 코드-->
+<script>
+    const img1 = "https://drive.google.com/thumbnail?id=1wSVy1uCzkvqWD3DzC5HDGV4p-UyXoIvl&sz=w1000";
+    const img2 = "https://drive.google.com/thumbnail?id=194oCvn-FOQTQWFqpvmjXa3KZ6pL-LwFu&sz=w1000";
+    
+    function toggleIcon() {
+      const icon = document.getElementById("sideIcon");
+      if (icon.getAttribute('src') === img1) {
+        icon.setAttribute('src', img2);
+      } else {
+        icon.setAttribute('src', img1);
+      }
+    }
+  </script>
 </html>
