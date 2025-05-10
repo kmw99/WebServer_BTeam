@@ -33,10 +33,10 @@
 		//
 		
 		try {
-			String jdbcDriver = "jdbc:mysql://localhost:3306/null"
+			String jdbcDriver = "jdbc:mysql://localhost:3306/NightViewDB"
 					+ "?useUnicode=true&characterEncoding=UTF-8"; //null 부분에 mysql 데베명 기입
-			String dbUser = "doublesid"; //sql id
-			String dbPass = "doublespw"; //sql pw
+			String dbUser = "mainweb"; //sql id
+			String dbPass = "1234"; //sql pw
 			conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
 			
 			//검색 조건별로 테이블 나누기
