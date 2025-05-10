@@ -1,0 +1,18 @@
+회원정보 및 즐겨찾기 테이블 생성 SQL 코드
+
+회원정보
+CREATE TABLE IF NOT EXISTS users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+
+즐겨찾기
+CREATE TABLE IF NOT EXISTS favorites (
+    favorite_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,                      -- 회원 식별자
+    address_id INT NOT NULL,                   -- 즐겨찾은 장소의 address_id
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (address_id) REFERENCES places(address_id)
+);
