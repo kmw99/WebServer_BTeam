@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "java.sql.DriverManager" %>
+<%@ page import = "java.sql.Connection" %>
+<%@ page import = "java.sql.PreparedStatement" %>
+<%@ page import = "java.sql.ResultSet" %>
+<%@ page import = "java.sql.SQLException" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -151,7 +157,7 @@
 
   <!-- 로그인 폼 -->
   <div class="form-popup login-form">
-    <form autocomplete="off" onsubmit="return false;">
+    <form autocomplete="off" action="LoginProcess.jsp" method="post">
       <label for="login-id">아이디</label>
       <input type="text" id="login-id" name="login-id" autocomplete="username">
       <label for="login-pw">비밀번호</label>
@@ -164,14 +170,14 @@
 
   <!-- 회원가입 폼 -->
   <div class="form-popup signup-form">
-    <form autocomplete="off" onsubmit="return false;">
+    <form autocomplete="off" action="RegisterProcess.jsp" method="post">
       <label for="signup-id">아이디</label>
       <input type="text" id="signup-id" name="signup-id" autocomplete="username">
       <label for="signup-pw">비밀번호</label>
       <input type="password" id="signup-pw" name="signup-pw" autocomplete="new-password">
       <label for="signup-pw-confirm">비밀번호 확인</label>
       <input type="password" id="signup-pw-confirm" name="signup-pw-confirm" autocomplete="new-password">
-      <label for="popup-login" style="background:#444; margin-bottom:0; margin-top:8px; cursor:pointer;">회원가입 완료</label>
+      <button for="popup-login" type="submit" style="background:#444; margin-bottom:0; margin-top:8px; cursor:pointer;">회원가입</button>
       <label for="popup-close" style="background:#888; margin-bottom:0; margin-top:8px; cursor:pointer;">닫기</label>
     </form>
   </div>
