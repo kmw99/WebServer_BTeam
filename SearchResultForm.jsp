@@ -196,16 +196,7 @@
 </head>
 <body>
 	<%@ include file="Header.jsp" %>
-	
-  <!--검색창 있는 섹션-->
-  <form id="search-form" action="SearchListForm.jsp" method="get">
-    <select name="searchKey" id="search-key">
-      <option value="name">장소명</option>
-      <option value="address">주소</option>
-    </select>
-    <input type="search" name="searchValue" id="search-input" placeholder="검색어 입력" />
-    <button type="submit">검색</button>
-  </form>
+	<%@ include file="SearchForm.jsp" %>
 
 	<%
 		//초기값 설정
@@ -217,17 +208,17 @@
 		
 		//드라이버 로딩
 		Class.forName("com.mysql.jdbc.Driver");
-		String searchKey = request.getParameter("id"); //검색키 가져오기
-		//
+		String id = request.getParameter("id");
 		
 		try {
-			String jdbcDriver = "jdbc:mysql://44.201.133.151:3306/NightViewDB"
+			String jdbcDriver = "jdbc:mysql://54.165.192.20:3306/NightViewDB"
 					+ "?useUnicode=true&characterEncoding=UTF-8";
 			String dbUser = "mainweb"; //sql id
 			String dbPass = "1234"; //sql pw
 			conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
 			
-			ps = conn.prepareStatement("SELECT * FROM places WHERE address_id LIKE " + searchKey);
+			ps = conn.prepareStatement("SELECT * FROM places WHERE address_id LIKE ?");
+			ps.setString(1, id);
 			
 			//검색값 토대로 테이블 출력
 			rs = ps.executeQuery();

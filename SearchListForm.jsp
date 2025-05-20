@@ -130,15 +130,7 @@
   </head>
 <body>
 	<%@ include file="Header.jsp" %>
-	
-	<form id="search-form" action="SearchListForm.jsp" method="get">
-	<select name="searchKey" id="search-key">
-    	<option value="name">장소명</option>
-		<option value="address">주소</option>
-    </select>
-    <input type="search" name="searchValue" id="search-input" placeholder="검색어 입력" />
-    <button type="submit">검색</button>
-	</form>
+	<%@ include file="SearchForm.jsp" %>
 	
 	<%
 		//초기값 설정
@@ -155,7 +147,7 @@
 		//
 		
 		try {
-			String jdbcDriver = "jdbc:mysql://44.201.133.151:3306/NightViewDB"
+			String jdbcDriver = "jdbc:mysql://54.165.192.20:3306/NightViewDB"
 					+ "?useUnicode=true&characterEncoding=UTF-8";
 			String dbUser = "mainweb"; //sql id
 			String dbPass = "1234"; //sql pw
@@ -178,7 +170,7 @@
 			rs = ps.executeQuery();
 			while(rs.next()) {
 	%>
-				<div class="result-box" Onclick="location.href='SearchResultForm.jsp'" data-id=<%= rs.getString("address_id") %>>
+				<div role="button" class="result-box" Onclick="location.href='SearchResultForm.jsp'">
 					<img class="place-photo" src=<%= rs.getString("images") %> alt="장소 사진">
 					<div class="place-info">
 		      			<div class="place-name-row">

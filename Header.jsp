@@ -1,10 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import = "java.sql.DriverManager" %>
-<%@ page import = "java.sql.Connection" %>
-<%@ page import = "java.sql.PreparedStatement" %>
-<%@ page import = "java.sql.ResultSet" %>
-<%@ page import = "java.sql.SQLException" %>
 
 <!DOCTYPE html>
 <html>
@@ -149,7 +144,7 @@
 
   <!-- 상단 오른쪽 버튼 그룹 -->
   <div class="top-buttons">
-    <a href="file:///c:/WebServer_BTeam/HTML/PickList.html" class="favorite-link">
+    <a href="PickListForm.jsp" class="favorite-link">
       즐겨찾기 목록
     </a>
     <label for="popup-login" class="top-right-box">로그인/회원가입</label>
@@ -177,7 +172,7 @@
       <input type="password" id="signup-pw" name="signup-pw" autocomplete="new-password">
       <label for="signup-pw-confirm">비밀번호 확인</label>
       <input type="password" id="signup-pw-confirm" name="signup-pw-confirm" autocomplete="new-password">
-      <button for="popup-login" type="submit" style="background:#444; margin-bottom:0; margin-top:8px; cursor:pointer;">회원가입</button>
+      <button type="submit" style="background:#444; margin-bottom:0; margin-top:8px; cursor:pointer;">회원가입</button>
       <label for="popup-close" style="background:#888; margin-bottom:0; margin-top:8px; cursor:pointer;">닫기</label>
     </form>
   </div>

@@ -361,36 +361,28 @@
     <div class="bottom-center-box">서울의 야경 명소를 구경하세요</div>
   </div>
 
-  <!--검색창 있는 섹션-->
-  <form id="search-form" action="SearchListForm.jsp" method="get">
-    <select name="searchKey" id="search-key">
-      <option value="name">장소명</option>
-      <option value="address">주소</option>
-    </select>
-    <input type="search" name="searchValue" id="search-input" placeholder="검색어 입력" />
-    <button type="submit">검색</button>
-  </form>
+	<%@ include file="SearchForm.jsp" %>
 
-  <div class="gallery-container">
+  <div class="gallery-container" onClick="location.href='SearchResultForm.jsp'">
     <div class="photo-card-wrap">
       <div class="photo-card">
         <img src="https://drive.google.com/thumbnail?id=1hMuBSOaMERmYrWJSYSICH_Ppec9wJBaq&sz=w1000" alt="광화문" />
         <div class="photo-overlay">광화문 광장</div>
       </div>
     </div>
-    <div class="photo-card-wrap">
+    <div class="photo-card-wrap" onClick="location.href='SearchResultForm.jsp'">
       <div class="photo-card">
         <img src="https://drive.google.com/thumbnail?id=1ay1mO0_LzfuWaNseZjQOKzPKd_68yMh6&sz=w1000" alt="DDP" />
         <div class="photo-overlay">DDP</div>
       </div>
     </div>
-    <div class="photo-card-wrap">
+    <div class="photo-card-wrap" onClick="location.href='SearchResultForm.jsp'">
       <div class="photo-card">
         <img src="https://drive.google.com/thumbnail?id=1_gmBPieuK-4U4JdeYGI0iFZ6NiEi3F61&sz=w1000" alt="숭례문" />
         <div class="photo-overlay">숭례문</div>
       </div>
     </div>
-    <div class="photo-card-wrap">
+    <div class="photo-card-wrap" onClick="location.href='SearchResultForm.jsp'">
       <div class="photo-card">
         <img src="https://drive.google.com/thumbnail?id=1qrkiHIggGdhr_R5mPYSA614yIgBedW3o&sz=w1000" alt="남산공원" />
         <div class="photo-overlay">남산 공원</div>
