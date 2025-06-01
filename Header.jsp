@@ -10,7 +10,7 @@
 <%@ page import="java.io.*, java.time.*, java.util.*"%>
 
 <%!
-	public void writeLog( String message, HttpServletRequest request, HttpSession session)
+	public void writeLog(HttpServletRequest request, HttpSession session)
 	{
 		try 
 		{
@@ -27,7 +27,7 @@
 				+ "\tPrevious:\t" + request.getHeader("referer") 		// 접속 경로(이전페이지)
 				+ "\tBrowser:\t" + request.getHeader("User-Agent") 		// 접속 브라우저	
 				+ "\tMessage:\t" + searchValue );
-
+			
 			writer.close();
 		} 
 		// 예외 처리
@@ -41,7 +41,7 @@
 <% String id = null; %>
 <%
     // 호출 위치
-    //writeLog("NightView 페이지 접속", request, session);
+    writeLog(request, session);
 %>
 
 <!DOCTYPE html>
@@ -50,6 +50,9 @@
 <meta charset="UTF-8">
 <title>야경명소</title>
   <style>
+    body {
+  		background-color:#f5f5f5;
+  	}
     .top-left-box {
       position: fixed;
       background: rgba(0,0,0,0.5);

@@ -149,7 +149,7 @@
 	<%@ include file="Header.jsp" %>
 	<%@ include file="SearchForm.jsp" %>
 
-	<div><%= searchValue %>에 관한 결과입니다.</div>
+	<div>'<%= searchValue %>'에 관한 결과입니다.</div>
 	<%
 		try {
 			String jdbcDriver = "jdbc:mysql://54.172.75.243:3306/NightViewDB"
@@ -184,34 +184,35 @@
 				else {
 					isIn = 0;
 				}
+				int addressId = rs.getInt("address_id");
 	%>
-				<div role="button" class="result-box" data-place-name='<%= rs.getString("name") %>' Onclick="GoToDetailPage(this)">
-					<img class="place-photo" src='<%= rs.getString("images") %>' alt="장소 사진">
-					<div class="place-info">
-		      			<div class="place-name-row">
-		        		<span class="place-name"><%= rs.getString("name") %></span>
-		        		<img
-							id="sideIcon"
-							class="side-icon"
-							src= <%if(isIn == 1) {
-								%>
-								"https://drive.google.com/thumbnail?id=194oCvn-FOQTQWFqpvmjXa3KZ6pL-LwFu&sz=w1000"
-								<%
-								} else {
-								%>
-								"https://drive.google.com/thumbnail?id=1wSVy1uCzkvqWD3DzC5HDGV4p-UyXoIvl&sz=w1000"
-								<%
-								}
-								%>
-							
-							alt="즐겨찾기"
-							onclick="event.stopPropagation(); toggleIcon(this, <%= rs.getInt("address_id") %>);"
-							style="cursor:pointer;"
-				        >
-		      			</div>
-	      			<div class="place-address"><%= rs.getString("address") %></div>
-	    			</div>
-    			</div>
+		<div role="button" class="result-box" data-place-name='<%= rs.getString("name") %>' Onclick="GoToDetailPage(this)">
+			<img class="place-photo" src='<%= rs.getString("images") %>' alt="장소 사진">
+			<div class="place-info">
+      			<div class="place-name-row">
+        		<span class="place-name"><%= rs.getString("name") %></span>
+        		<img
+					id="sideIcon"
+					class="side-icon"
+					src= <%if(isIn == 1) {
+						%>
+						"https://drive.google.com/thumbnail?id=194oCvn-FOQTQWFqpvmjXa3KZ6pL-LwFu&sz=w1000"
+						<%
+						} else {
+						%>
+						"https://drive.google.com/thumbnail?id=1wSVy1uCzkvqWD3DzC5HDGV4p-UyXoIvl&sz=w1000"
+						<%
+						}
+						%>
+					alt="즐겨찾기"
+					data-place-id="<%= addressId %>"
+					onclick="event.stopPropagation(); toggleIcon(this);"
+					style="cursor:pointer;"
+		        >
+      			</div>
+     			<div class="place-address"><%= rs.getString("address") %></div>
+   			</div>
+  			</div>
 				
 				<script>
 					function GoToDetailPage(boxElem) {
@@ -252,22 +253,46 @@
 </body>
 <!--즐겨찾기 버튼 눌렀을 때 이미지 바뀌는 코드-->
 <script>
-    function toggleIcon(iconElem, placeId) {
-		const userLoggedIn = <%= session.getAttribute("login") != null ? "true" : "false" %>;
-		if (!userLoggedIn) {
-			alert("로그인 후 이용 가능합니다.");
-			return;
-		}
-		
-		const img1 = "https://drive.google.com/thumbnail?id=1wSVy1uCzkvqWD3DzC5HDGV4p-UyXoIvl&sz=w1000";
-		const img2 = "https://drive.google.com/thumbnail?id=194oCvn-FOQTQWFqpvmjXa3KZ6pL-LwFu&sz=w1000";
-		const currentSrc = iconElem.getAttribute("src");
-		
-		if (iconElem.getAttribute('src') === img1) {
-			iconElem.setAttribute('src', img2);
-		}
-		else {
-			iconElem.setAttribute('src', img1);
-		}
-	}
+function toggleIcon(iconElem) {
+    const placeId = iconElem.getAttribute("data-place-id");
+
+    if (!placeId) {
+        console.error("Missing placeId from data attribute.");
+        alert("잘못된 장소 ID입니다.");
+        return;
+    }
+
+    const userLoggedIn = <%= session.getAttribute("login") != null ? "true" : "false" %>;
+    if (!userLoggedIn) {
+        alert("로그인 후 이용 가능합니다.");
+        return;
+    }
+
+    const img1 = "https://drive.google.com/thumbnail?id=1wSVy1uCzkvqWD3DzC5HDGV4p-UyXoIvl&sz=w1000";
+    const img2 = "https://drive.google.com/thumbnail?id=194oCvn-FOQTQWFqpvmjXa3KZ6pL-LwFu&sz=w1000";
+    const currentSrc = iconElem.getAttribute("src");
+
+    const action = (currentSrc === img1) ? "add" : "remove";
+    const targetUrl = (action === "add") ? "AddPickList.jsp" : "RemovePickList.jsp";
+
+    fetch(targetUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({ placeId: placeId })
+    })
+    .then(res => res.text())
+    .then(result => {
+        if (result.trim() === "success") {
+            iconElem.setAttribute('src', (action === "add") ? img2 : img1);
+        } else {
+            alert("DB 처리 실패");
+        }
+    })
+    .catch(err => {
+        console.error("에러 발생:", err);
+        alert("요청 실패");
+    });
+}
 </script>

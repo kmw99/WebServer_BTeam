@@ -204,8 +204,10 @@
 		request.setCharacterEncoding("utf-8");
 		Connection conn = null;
 		PreparedStatement ps = null;
-		
+		PreparedStatement fv = null;
 		ResultSet rs = null;
+		ResultSet fs = null;
+		int isIn = 0;
 		//
 		
 		//드라이버 로딩
@@ -225,6 +227,17 @@
 			//검색값 토대로 테이블 출력
 			rs = ps.executeQuery();
 			rs.next();
+			
+			fv = conn.prepareStatement("SELECT * FROM favorites WHERE user_id=? AND address_id=?");
+			fv.setString(1, (String)session.getAttribute("login"));
+			fv.setInt(2, rs.getInt("address_id"));
+			fs = fv.executeQuery();
+			if(fs.next()) {
+				isIn = 1;
+			}
+			else {
+				isIn = 0;
+			}
 			
 			int addressId = rs.getInt(1);
 			PreparedStatement info = conn.prepareStatement("SELECT * FROM contact_info WHERE address_id= ?");
@@ -254,14 +267,36 @@
 			      <img
 			        id="sideIcon"
 			        class="side-icon"
-			        src="https://drive.google.com/thumbnail?id=1wSVy1uCzkvqWD3DzC5HDGV4p-UyXoIvl&sz=w1000"
+					src= <%if(isIn == 1) {
+						%>
+						"https://drive.google.com/thumbnail?id=194oCvn-FOQTQWFqpvmjXa3KZ6pL-LwFu&sz=w1000"
+						<%
+						} else {
+						%>
+						"https://drive.google.com/thumbnail?id=1wSVy1uCzkvqWD3DzC5HDGV4p-UyXoIvl&sz=w1000"
+						<%
+						}
+						%>
 			        alt="즐겨찾기"
-			        onclick="toggleIcon()"
+			        data-place-id="<%= addressId %>"
+			        onclick="toggleIcon(this)"
 			        style="cursor:pointer;"
 			      >
 			    </div>
 			    <div class="place-address">주소: <%= rs.getString("address") %></div>
-			    <div class="place-contact">연락처: <%= infoRs.getString("phone") %></div>
+   				<%
+				    String phone = infoRs.getString("phone");
+				    if (phone != null && !phone.trim().equals("") && !phone.equalsIgnoreCase("NULL")) {
+				%>
+					<div class="place-contact">연락처: <%= infoRs.getString("phone") %></div>
+				<%
+				    }
+				    else {
+				%>
+					<div class="place-contact">연락처: X</div>
+				<% 
+				    }
+				%>
 				<%
 				    String website = infoRs.getString("website");
 				    if (website != null && !website.trim().equals("") && !website.equalsIgnoreCase("NULL")) {
@@ -278,9 +313,34 @@
 				    }
 				%>
 			    <div class="place-hours">운영시간: <%= infoRs.getString("opening_hours") %></div>
-			    <div class="place-traffic">대중교통으로 오시는 경우</div>
-			    <div class="place-traffic">버스 - <%= tpRs.getString("bus") %></div>
-			    <div class="place-traffic">지하철 - <%= tpRs.getString("subway") %></div>
+			    <div class="place-traffic">교통편</div>
+			    <%
+				    String bus = tpRs.getString("bus");
+				    if (bus != null && !bus.trim().equals("") && !bus.equalsIgnoreCase("NULL")) {
+				%>
+					<div class="place-traffic">버스: <%= tpRs.getString("bus") %></div>
+				<%
+				    }
+				    else {
+				%>
+					<div class="place-traffic">버스: X</div>
+				<% 
+				    }
+				%>
+							    <%
+				    String subway = tpRs.getString("subway");
+				    if (subway != null && !subway.trim().equals("") && !subway.equalsIgnoreCase("NULL")) {
+				    	subway = subway.replace("?", ", ");
+				%>
+					<div class="place-traffic">지하철: <%= subway %></div>
+				<%
+				    }
+				    else {
+				%>
+					<div class="place-traffic">지하철: X</div>
+				<% 
+				    }
+				%>
 			    <!--<div class="place-parking">주차: </div> -->
 			    <div id="map" class="place-map" style="width:100%; height:300px;"></div>
 				<script>
@@ -351,16 +411,47 @@
 
 <!--즐겨찾기 버튼 눌렀을 때 이미지 바뀌는 코드-->
 <script>
+function toggleIcon(iconElem) {
+    const placeId = iconElem.getAttribute("data-place-id");
+
+    if (!placeId) {
+        console.error("Missing placeId from data attribute.");
+        alert("잘못된 장소 ID입니다.");
+        return;
+    }
+
+    const userLoggedIn = <%= session.getAttribute("login") != null ? "true" : "false" %>;
+    if (!userLoggedIn) {
+        alert("로그인 후 이용 가능합니다.");
+        return;
+    }
+
     const img1 = "https://drive.google.com/thumbnail?id=1wSVy1uCzkvqWD3DzC5HDGV4p-UyXoIvl&sz=w1000";
     const img2 = "https://drive.google.com/thumbnail?id=194oCvn-FOQTQWFqpvmjXa3KZ6pL-LwFu&sz=w1000";
-    
-    function toggleIcon() {
-      const icon = document.getElementById("sideIcon");
-      if (icon.getAttribute('src') === img1) {
-        icon.setAttribute('src', img2);
-      } else {
-        icon.setAttribute('src', img1);
-      }
-    }
-  </script>
+    const currentSrc = iconElem.getAttribute("src");
+
+    const action = (currentSrc === img1) ? "add" : "remove";
+    const targetUrl = (action === "add") ? "AddPickList.jsp" : "RemovePickList.jsp";
+
+    fetch(targetUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({ placeId: placeId })
+    })
+    .then(res => res.text())
+    .then(result => {
+        if (result.trim() === "success") {
+            iconElem.setAttribute('src', (action === "add") ? img2 : img1);
+        } else {
+            alert("DB 처리 실패");
+        }
+    })
+    .catch(err => {
+        console.error("에러 발생:", err);
+        alert("요청 실패");
+    });
+}
+</script>
 </html>

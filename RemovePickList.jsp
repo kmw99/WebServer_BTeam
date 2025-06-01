@@ -8,11 +8,8 @@
 
 <%
 request.setCharacterEncoding("utf-8");
-response.setContentType("text/plain");
 String userId = (String)session.getAttribute("login");
-String placeIdStr = request.getParameter("placeId");
-
-int placeId = Integer.parseInt(request.getParameter("placeId"));	
+int placeId = Integer.parseInt(request.getParameter("placeId"));
 
 if(userId != null) {
 	Connection conn = null;
@@ -23,7 +20,7 @@ if(userId != null) {
         String jdbcDriver = "jdbc:mysql://54.172.75.243:3306/NightViewDB?useUnicode=true&characterEncoding=UTF-8";
         conn = DriverManager.getConnection(jdbcDriver, "mainweb", "1234");
 
-        ps = conn.prepareStatement("INSERT INTO favorites(user_id, address_id) VALUES(?, ?)");
+        ps = conn.prepareStatement("DELETE FROM favorites WHERE user_id=? AND address_id=?");
         ps.setString(1, userId);
         ps.setInt(2, placeId);
         ps.executeUpdate();
