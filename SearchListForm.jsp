@@ -8,7 +8,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>검색리스트</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
   <style>
     #search-results {
@@ -129,15 +128,15 @@
   </style>
   </head>
 <body>
-	<%@ include file="Header.jsp" %>
-	<%@ include file="SearchForm.jsp" %>
-	
 	<%
 		//초기값 설정
 		request.setCharacterEncoding("utf-8");
 		Connection conn = null;
 		PreparedStatement ps = null;
+		PreparedStatement fv = null;
 		ResultSet rs = null;
+		ResultSet fs = null;
+		int isIn = 0;
 		//
 		
 		//드라이버 로딩
@@ -145,22 +144,28 @@
 		String searchKey = request.getParameter("searchKey"); //검색키 가져오기
 		String searchValue = request.getParameter("searchValue"); //검색값 가져오기
 		//
-		
+	%>
+
+	<%@ include file="Header.jsp" %>
+	<%@ include file="SearchForm.jsp" %>
+
+	<div><%= searchValue %>에 관한 결과입니다.</div>
+	<%
 		try {
-			String jdbcDriver = "jdbc:mysql://54.165.192.20:3306/NightViewDB"
+			String jdbcDriver = "jdbc:mysql://54.172.75.243:3306/NightViewDB"
 					+ "?useUnicode=true&characterEncoding=UTF-8";
 			String dbUser = "mainweb"; //sql id
 			String dbPass = "1234"; //sql pw
 			conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
 			
 			//검색 조건별로 테이블 나누기
-			if(searchKey == null & searchValue == null) { //키 X, 값 X
+			if(searchKey == null && searchValue == null) { //키 X, 값 X
 				ps = conn.prepareStatement("SELECT * FROM places"); //모든 테이블 선택
 			}
-			else if(searchKey != null & searchValue == null) { //키 O, 값 X
+			else if(searchKey != null && searchValue == null) { //키 O, 값 X
 				ps = conn.prepareStatement("SELECT * FROM places"); //모든 테이블 선택
 			}
-			else if(searchKey != null & searchValue != null) { //키 O, 값 O
+			else if(searchKey != null && searchValue != null) { //키 O, 값 O
 				ps = conn.prepareStatement("SELECT * FROM places WHERE " + searchKey + " LIKE ?"); //해당 키 테이블 선택
 				ps.setString(1, "%" + searchValue + "%");
 			}
@@ -169,25 +174,51 @@
 			//검색값 토대로 테이블 출력
 			rs = ps.executeQuery();
 			while(rs.next()) {
+				fv = conn.prepareStatement("SELECT * FROM favorites WHERE user_id=? AND address_id=?");
+				fv.setString(1, (String)session.getAttribute("login"));
+				fv.setInt(2, rs.getInt("address_id"));
+				fs = fv.executeQuery();
+				if(fs.next()) {
+					isIn = 1;
+				}
+				else {
+					isIn = 0;
+				}
 	%>
-				<div role="button" class="result-box" Onclick="location.href='SearchResultForm.jsp'">
-					<img class="place-photo" src=<%= rs.getString("images") %> alt="장소 사진">
+				<div role="button" class="result-box" data-place-name='<%= rs.getString("name") %>' Onclick="GoToDetailPage(this)">
+					<img class="place-photo" src='<%= rs.getString("images") %>' alt="장소 사진">
 					<div class="place-info">
 		      			<div class="place-name-row">
 		        		<span class="place-name"><%= rs.getString("name") %></span>
 		        		<img
 							id="sideIcon"
 							class="side-icon"
-							src="https://drive.google.com/thumbnail?id=1wSVy1uCzkvqWD3DzC5HDGV4p-UyXoIvl&sz=w1000"
+							src= <%if(isIn == 1) {
+								%>
+								"https://drive.google.com/thumbnail?id=194oCvn-FOQTQWFqpvmjXa3KZ6pL-LwFu&sz=w1000"
+								<%
+								} else {
+								%>
+								"https://drive.google.com/thumbnail?id=1wSVy1uCzkvqWD3DzC5HDGV4p-UyXoIvl&sz=w1000"
+								<%
+								}
+								%>
+							
 							alt="즐겨찾기"
-							onclick="toggleIcon()"
+							onclick="event.stopPropagation(); toggleIcon(this, <%= rs.getInt("address_id") %>);"
 							style="cursor:pointer;"
 				        >
 		      			</div>
 	      			<div class="place-address"><%= rs.getString("address") %></div>
 	    			</div>
     			</div>
-
+				
+				<script>
+					function GoToDetailPage(boxElem) {
+						const placeName = boxElem.getAttribute('data-place-name');
+						location.href = "SearchResultForm.jsp?name=" + encodeURIComponent(placeName);
+					}
+				</script>
 	<%
 			}
 			//
@@ -221,15 +252,22 @@
 </body>
 <!--즐겨찾기 버튼 눌렀을 때 이미지 바뀌는 코드-->
 <script>
-    const img1 = "https://drive.google.com/thumbnail?id=1wSVy1uCzkvqWD3DzC5HDGV4p-UyXoIvl&sz=w1000";
-    const img2 = "https://drive.google.com/thumbnail?id=194oCvn-FOQTQWFqpvmjXa3KZ6pL-LwFu&sz=w1000";
-    
-    function toggleIcon() {
-      const icon = document.getElementById("sideIcon");
-      if (icon.getAttribute('src') === img1) {
-        icon.setAttribute('src', img2);
-      } else {
-        icon.setAttribute('src', img1);
-      }
-    }
-  </script>
+    function toggleIcon(iconElem, placeId) {
+		const userLoggedIn = <%= session.getAttribute("login") != null ? "true" : "false" %>;
+		if (!userLoggedIn) {
+			alert("로그인 후 이용 가능합니다.");
+			return;
+		}
+		
+		const img1 = "https://drive.google.com/thumbnail?id=1wSVy1uCzkvqWD3DzC5HDGV4p-UyXoIvl&sz=w1000";
+		const img2 = "https://drive.google.com/thumbnail?id=194oCvn-FOQTQWFqpvmjXa3KZ6pL-LwFu&sz=w1000";
+		const currentSrc = iconElem.getAttribute("src");
+		
+		if (iconElem.getAttribute('src') === img1) {
+			iconElem.setAttribute('src', img2);
+		}
+		else {
+			iconElem.setAttribute('src', img1);
+		}
+	}
+</script>

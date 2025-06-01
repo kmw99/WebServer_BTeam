@@ -13,7 +13,7 @@
 	ResultSet rs = null;
 	int result = 0; //성공 확인여부
 	
-	String id = request.getParameter("signup-id"); //아이디
+	String user_id = request.getParameter("signup-id"); //아이디
 	String password = request.getParameter("signup-pw"); //비밀번호
 	String passwordcf = request.getParameter("signup-pw-confirm"); //비밀번호 확인
 	//
@@ -29,7 +29,7 @@
 		conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
 
 		ps = conn.prepareStatement("SELECT * FROM users WHERE username=?");
-		ps.setString(1, id);
+		ps.setString(1, user_id);
 		
 		rs = ps.executeQuery();
 		
@@ -45,7 +45,7 @@
 		else {
 			ps = conn.prepareStatement("INSERT INTO users values(?, ?, ?)");
 			ps.setInt(1, 0);
-			ps.setString(2, id);
+			ps.setString(2, user_id);
 			ps.setString(3, password);
 			if(ps.executeUpdate() != 0) {
 				result += 1;
@@ -61,19 +61,19 @@
 <%
 	if(result == 1) {
 		out.println("<script>alert('회원가입이 완료되었습니다.');</script>");
-		out.println("<script>hitory.replaceState(history.state, null, 'Main.jsp')</script>");
+		out.println("<script>location.href = document.referrer;</script>");
 	}
 	else if(result == -1) {
 		out.println("<script>alert('비밀번호를 확인해주세요.');</script>");
-		out.println("<script>history.back()</script>");
+		out.println("<script>location.href = document.referrer;</script>");
 	}
 	else if(result == -2) {
 		out.println("<script>alert('이미 존재하는 아이디입니다.');</script>");
-		out.println("<script>history.back()</script>");
+		out.println("<script>location.href = document.referrer;</script>");
 	}
 	else {
 		out.println("<script>alert('회원가입에 실패했습니다.');</script>");
-		out.println("<script>history.back()</script>");
+		out.println("<script>location.href = document.referrer;</script>");
 	}
 %>
 
@@ -81,7 +81,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입 처리</title>
+<title>야경명소</title>
 </head>
 <body>
 

@@ -4,13 +4,13 @@
 <%@ page import = "java.sql.PreparedStatement" %>
 <%@ page import = "java.sql.ResultSet" %>
 <%@ page import = "java.sql.SQLException" %>
+<%@ page import = "java.net.URLEncoder" %>
 
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>검색결과</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
   <style>
 
@@ -197,39 +197,60 @@
 <body>
 	<%@ include file="Header.jsp" %>
 	<%@ include file="SearchForm.jsp" %>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=914a6d66ecdbb0b690b058ee9333d4df&libraries=services"></script>
 
 	<%
 		//초기값 설정
 		request.setCharacterEncoding("utf-8");
 		Connection conn = null;
 		PreparedStatement ps = null;
+		
 		ResultSet rs = null;
 		//
 		
 		//드라이버 로딩
 		Class.forName("com.mysql.jdbc.Driver");
-		String id = request.getParameter("id");
+		String name = request.getParameter("name");
 		
 		try {
-			String jdbcDriver = "jdbc:mysql://54.165.192.20:3306/NightViewDB"
+			String jdbcDriver = "jdbc:mysql://54.172.75.243:3306/NightViewDB"
 					+ "?useUnicode=true&characterEncoding=UTF-8";
 			String dbUser = "mainweb"; //sql id
 			String dbPass = "1234"; //sql pw
 			conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
 			
-			ps = conn.prepareStatement("SELECT * FROM places WHERE address_id LIKE ?");
-			ps.setString(1, id);
+			ps = conn.prepareStatement("SELECT * FROM places WHERE name= ?");
+			ps.setString(1, name);
 			
 			//검색값 토대로 테이블 출력
 			rs = ps.executeQuery();
+			rs.next();
+			
+			int addressId = rs.getInt(1);
+			PreparedStatement info = conn.prepareStatement("SELECT * FROM contact_info WHERE address_id= ?");
+			info.setInt(1, addressId);
+			ResultSet infoRs = info.executeQuery();
+			infoRs.next();
+			
+			PreparedStatement tp = conn.prepareStatement("SELECT * FROM transport WHERE address_id= ?");
+			tp.setInt(1, addressId);
+			ResultSet tpRs = tp.executeQuery();
+			tpRs.next();
+			
+			String address = rs.getString("address");
+			if (address == null || address.trim().isEmpty() ||
+			    address.equalsIgnoreCase("null") || address.equalsIgnoreCase("NULL")) {
+			    address = "서울특별시 중구 세종대로 110"; // fallback
+			}
+			String encodedAddress = URLEncoder.encode(address, "UTF-8");
 	%>
 
 			<!--검색 결과 나오는 섹션-->
 			<div class="result-box">
-			  <img class="place-photo" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="장소 사진">
+			  <img class="place-photo" src='<%= rs.getString("images") %>' alt="장소 사진">
 			  <div class="place-info">
 			    <div class="place-name-row">
-			      <span class="place-name"><%= rs.getString("name") %>장소명</span>
+			      <span class="place-name"><%= rs.getString("name") %></span>
 			      <img
 			        id="sideIcon"
 			        class="side-icon"
@@ -240,16 +261,63 @@
 			      >
 			    </div>
 			    <div class="place-address">주소: <%= rs.getString("address") %></div>
-			    <div class="place-contact">연락처: </div>
-			    <div class="place-homepage">홈페이지: <a href="https://seoulforest.or.kr" target="_blank">https://seoulforest.or.kr</a></div>
-			    <div class="place-traffic">교통편</div>
-			    <div class="place-hours">운영시간</div>
-			    <div class="place-parking">주차</div>
-			    <div class="place-map">
-			      <!-- 지도 API 자리 -->
-			      지도 API 자리
-			    </div>
-			  </div>
+			    <div class="place-contact">연락처: <%= infoRs.getString("phone") %></div>
+				<%
+				    String website = infoRs.getString("website");
+				    if (website != null && !website.trim().equals("") && !website.equalsIgnoreCase("NULL")) {
+				%>
+				    <div class="place-homepage">
+				        홈페이지: <a href="<%= website %>" target="_blank"><%= website %></a>
+				    </div>
+				<%
+				    }
+				    else {
+				%>
+					<div class="place-homepage">홈페이지: X</div>
+				<% 
+				    }
+				%>
+			    <div class="place-hours">운영시간: <%= infoRs.getString("opening_hours") %></div>
+			    <div class="place-traffic">대중교통으로 오시는 경우</div>
+			    <div class="place-traffic">버스 - <%= tpRs.getString("bus") %></div>
+			    <div class="place-traffic">지하철 - <%= tpRs.getString("subway") %></div>
+			    <!--<div class="place-parking">주차: </div> -->
+			    <div id="map" class="place-map" style="width:100%; height:300px;"></div>
+				<script>
+				  window.onload = function () {
+				    var mapContainer = document.getElementById('map');
+				    var mapOption = {
+				      center: new kakao.maps.LatLng(37.5665, 126.9780),
+				      level: 3
+				    };
+				
+				    var map = new kakao.maps.Map(mapContainer, mapOption);
+				
+				    var geocoder = new kakao.maps.services.Geocoder();
+				    var address = decodeURIComponent("<%= encodedAddress %>");
+				
+				    geocoder.addressSearch(address, function (result, status) {
+				      if (status === kakao.maps.services.Status.OK) {
+				        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+				
+				        var marker = new kakao.maps.Marker({
+				          map: map,
+				          position: coords
+				        });
+				
+				        var infowindow = new kakao.maps.InfoWindow({
+				          content: '<div style="padding:5px;font-size:14px;">' + address + '</div>'
+				        });
+				        infowindow.open(map, marker);
+				
+				        map.setCenter(coords);
+				      } else {
+				        alert("주소 검색 실패: " + status);
+				      }
+				    });
+				  }
+				</script>
+			</div>
 			</div>
 
 	<%
@@ -259,7 +327,7 @@
 			e.printStackTrace();
 		}
 		finally {
-			//Statement 종료
+			// Statement 종료
 			if(rs != null) {
 				try { rs.close(); }
 				catch(SQLException e) {}
@@ -270,7 +338,7 @@
 			}
 			//
 			
-			//Connection 종료
+			// Connection 종료
 			if(conn != null) {
 				try { conn.close(); }
 				catch(SQLException e) {}
@@ -280,6 +348,7 @@
 
 	<%@ include file="Footer.jsp" %>
 </body>
+
 <!--즐겨찾기 버튼 눌렀을 때 이미지 바뀌는 코드-->
 <script>
     const img1 = "https://drive.google.com/thumbnail?id=1wSVy1uCzkvqWD3DzC5HDGV4p-UyXoIvl&sz=w1000";

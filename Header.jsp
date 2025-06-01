@@ -1,10 +1,54 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "java.sql.DriverManager" %>
+<%@ page import = "java.sql.Connection" %>
+<%@ page import = "java.sql.PreparedStatement" %>
+<%@ page import = "java.sql.ResultSet" %>
+<%@ page import = "java.sql.SQLException" %>
+<%@ page import = "java.net.URLEncoder" %>
+<%@ page session="true" %>
+<%@ page import="java.io.*, java.time.*, java.util.*"%>
+
+<%!
+	public void writeLog( String message, HttpServletRequest request, HttpSession session)
+	{
+		try 
+		{
+			// 로그 파일 : ex) /var/lib/tomcat8/webapps/ROOT/book/jsp/log.txt, /usr/local/tomcat/webapps/ROOT/book/jsp/log.txt
+			final String logFileName = "C:/Users/kim10/eclipse-workspace/NightView/src/main/webapp/log.txt";	 
+			BufferedWriter writer = new BufferedWriter( new FileWriter( logFileName, true ) );
+			String searchValue = request.getParameter("searchValue");
+			
+			// 로그 데이터 출력	
+			writer.append( "\nTime:\t" + LocalDate.now() + " " + LocalTime.now() 	// 접속 시간	
+				+ "\tSessionID:\t" + session.getId()				// 접속 ID
+				+ "\tUserID:\t" + (String)session.getAttribute("login") // 회원 ID
+				+ "\tURI:\t" + request.getRequestURI()				// 현재 페이지 
+				+ "\tPrevious:\t" + request.getHeader("referer") 		// 접속 경로(이전페이지)
+				+ "\tBrowser:\t" + request.getHeader("User-Agent") 		// 접속 브라우저	
+				+ "\tMessage:\t" + searchValue );
+
+			writer.close();
+		} 
+		// 예외 처리
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+	}
+%>
+
+<% String id = null; %>
+<%
+    // 호출 위치
+    //writeLog("NightView 페이지 접속", request, session);
+%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<title>야경명소</title>
   <style>
     .top-left-box {
       position: fixed;
@@ -131,7 +175,7 @@
     </style>
 </head>
 <body>
-    <a href="Main.jsp" style="text-decoration:none;"> <!-- file:///c%3A/WebServer_BTeam/HTML/ -->
+    <a href="Main.jsp" style="text-decoration:none;"> <!-- 로고(클릭시 메인 화면으로 이동) -->
       <div class="top-left-box" style="cursor:pointer; padding:0; background:transparent; box-shadow:none;">
         <img src="https://drive.google.com/thumbnail?id=1ZmRjZh33NOS-L9Anxc-DLavyhiOOIbgg&sz=w1000" style="height:120px; display:block;">
       </div>
@@ -144,14 +188,23 @@
 
   <!-- 상단 오른쪽 버튼 그룹 -->
   <div class="top-buttons">
+  <% if(session.getAttribute("login") != null) { %>
     <a href="PickListForm.jsp" class="favorite-link">
       즐겨찾기 목록
     </a>
+  <% } %>
+    <% if(session.getAttribute("login") == null) { %>
     <label for="popup-login" class="top-right-box">로그인/회원가입</label>
+    <% }
+    else { %>
+    	<label for="popup-login" class="top-right-box"> <%= session.getAttribute("login") %> </label>
+    <% } %>
   </div>
 
   <!-- 로그인 폼 -->
   <div class="form-popup login-form">
+  	
+  	<% if(session.getAttribute("login") == null) { %>
     <form autocomplete="off" action="LoginProcess.jsp" method="post">
       <label for="login-id">아이디</label>
       <input type="text" id="login-id" name="login-id" autocomplete="username">
@@ -161,6 +214,13 @@
       <label for="popup-signup" style="background:#444; margin-bottom:0; margin-top:8px; cursor:pointer;">회원가입</label>
       <label for="popup-close" style="background:#888; margin-bottom:0; margin-top:8px; cursor:pointer;">닫기</label>
     </form>
+    <% }
+  	else { %>
+  	<form autocomplete="off" action="Logout.jsp" method="post">
+      <button type="submit">로그아웃</button>
+      <label for="popup-close" style="background:#888; margin-bottom:0; margin-top:8px; cursor:pointer;">닫기</label>
+    </form>
+  	<% } %>
   </div>
 
   <!-- 회원가입 폼 -->

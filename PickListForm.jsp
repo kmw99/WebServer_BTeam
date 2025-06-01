@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import = "java.sql.DriverManager" %>
+<%@ page import = "java.sql.Connection" %>
+<%@ page import = "java.sql.PreparedStatement" %>
+<%@ page import = "java.sql.ResultSet" %>
+<%@ page import = "java.sql.SQLException" %>
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>replit</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
   <style>
     #search-results {
@@ -94,7 +98,31 @@
 	<%@ include file="Header.jsp" %>
     <h2 class="pick-title">나의 Pick 리스트</h2>
     <p class="pick-desc">관심 장소를 한눈에 확인하고 관리하세요!</p>
-
+	<%
+			//초기값 설정
+			request.setCharacterEncoding("utf-8");
+			Connection conn = null;
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			//
+			
+			//드라이버 로딩
+			Class.forName("com.mysql.jdbc.Driver");
+			//
+			
+			try {
+				String jdbcDriver = "jdbc:mysql://54.165.192.20:3306/NightViewDB"
+						+ "?useUnicode=true&characterEncoding=UTF-8";
+				String dbUser = "mainweb"; //sql id
+				String dbPass = "1234"; //sql pw
+				conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
+				ps = conn.prepareStatement("SELECT * FROM favorites user_id=?"); //로그인 세션으로 즐겨찾기 목록 불러오기
+				ps.setString(1, (String)session.getAttribute("login"));
+				
+				//검색값 토대로 테이블 출력
+				rs = ps.executeQuery();
+				while(rs.next()) {
+	%>
 <!--검색 결과 나오는 섹션-->
 <div class="pickresult-box">
   <img class="pickplace-photo" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="장소 사진">
@@ -113,6 +141,34 @@
     <div class="pickplace-address">주소</div>
   </div>
 </div>
+	<%
+			}
+			//
+		}
+		catch(SQLException e) {
+			out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		finally {
+			//Statement 종료
+			if(rs != null) {
+				try { rs.close(); }
+				catch(SQLException e) {}
+			}
+			if(ps != null) {
+				try { ps.close(); }
+				catch(SQLException e) {}
+			}
+			//
+			
+			//Connection 종료
+			if(conn != null) {
+				try { conn.close(); }
+				catch(SQLException e) {}
+			}
+		}
+	%>
+
 
 	<%@ include file="Footer.jsp" %>
 </body>
