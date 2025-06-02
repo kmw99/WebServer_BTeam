@@ -3,15 +3,15 @@
     
 <%
 	session.invalidate(); //세션 초기화
-	//out.println("<script>alert('로그아웃');</script>");
-	out.println("<script>location.href = document.referrer;</script>");
+	out.println("<script>alert('로그아웃');</script>");
+	response.sendRedirect("LoginForm.jsp");
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>야경명소</title>
+<title>로그아웃</title>
 </head>
 <body>
 

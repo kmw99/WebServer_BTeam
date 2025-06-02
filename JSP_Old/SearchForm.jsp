@@ -1,8 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
+  <title>replit</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
   <style>
     #search-form {
@@ -60,7 +59,7 @@
 </head>
 <body>
 <!--검색창 있는 섹션-->
-  <form id="search-form" action="SearchListForm.jsp" method="get">
+  <form id="search-form" action="SearchList.jsp" method="get">
     <select name="searchKey" id="search-key">
       <option value="name">장소명</option>
       <option value="address">주소</option>
