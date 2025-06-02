@@ -197,7 +197,7 @@
 <body>
 	<%@ include file="Header.jsp" %>
 	<%@ include file="SearchForm.jsp" %>
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=914a6d66ecdbb0b690b058ee9333d4df&libraries=services"></script>
+	<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=914a6d66ecdbb0b690b058ee9333d4df&libraries=services"></script>
 
 	<%
 		//초기값 설정
