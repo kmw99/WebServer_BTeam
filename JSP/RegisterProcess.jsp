@@ -22,7 +22,7 @@
 	Class.forName("com.mysql.jdbc.Driver");
 
 	try {
-		String jdbcDriver = "jdbc:mysql://54.165.192.20:3306/NightViewDB"
+		String jdbcDriver = "jdbc:mysql://54.172.75.243:3306/NightViewDB"
 				+ "?useUnicode=true&characterEncoding=UTF-8";
 		String dbUser = "mainweb"; //sql id
 		String dbPass = "1234"; //sql pw

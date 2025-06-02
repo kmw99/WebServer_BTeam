@@ -15,7 +15,7 @@
 		try 
 		{
 			// 로그 파일 : ex) /var/lib/tomcat8/webapps/ROOT/book/jsp/log.txt, /usr/local/tomcat/webapps/ROOT/book/jsp/log.txt
-			final String logFileName = "C:/Users/kim10/eclipse-workspace/NightView/src/main/webapp/log.txt";	 
+			final String logFileName = "/var/lib/tomcat10/webapps/ROOT/WebServer_BTeam/JSP/log.txt";	 
 			BufferedWriter writer = new BufferedWriter( new FileWriter( logFileName, true ) );
 			String searchValue = request.getParameter("searchValue");
 			
