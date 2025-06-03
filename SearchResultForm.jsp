@@ -13,55 +13,6 @@
   <meta name="viewport" content="width=device-width">
   <link href="style.css" rel="stylesheet" type="text/css" />
   <style>
-
-    #search-form {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      width: 350px;
-      margin: 100px auto 0 auto;
-      border-bottom: 2px solid #222; /* 두꺼운 밑줄 */
-      padding-bottom: 10px;
-      background: transparent;
-    }
-
-    #search-input {
-      border: none;
-      outline: none;
-      background: transparent;
-      font-size: 18px;
-      margin-right: auto;
-      color: #555;
-      width: 120px;
-      text-align: left;
-    }
-
-    #search-form button {
-      border: none;
-      background: transparent;
-      font-size: 18px;
-      color: #555;
-      cursor: pointer;
-      margin-left: auto;
-    }
-
-    #search-results {
-      margin-top: 20px;
-      border-top: 2px solid white;
-    }
-
-    #search-results div {
-      margin-bottom: 10px;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
-
-    #search-results h3 {
-      margin-top: 0;
-    }
-
     #data-list {
       display: block;
     }
@@ -69,13 +20,6 @@
     /* 로그인/회원가입 radio 토글 숨김 */
     .hidden-toggle {
       display: none;
-    }
-
-    #search-results {
-      margin-top: 30px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
     }
 
     .result-box {
@@ -154,44 +98,6 @@
       justify-content: center;
       font-size: 1.2rem;
     }
-
-    .site-footer {
-      width: 100%;
-      background: #222;
-      color: #fff;
-      padding: 18px 0;
-      position: relative;
-      margin-top: 60px;
-      font-size: 1rem;
-      letter-spacing: 1px;
-    }
-
-    .footer-content {
-      width: 90%;
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      gap: 32px;
-      align-items: center;
-      text-align: center;
-    }
-    
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .site-footer {
-      margin-top: auto;
-    }
   </style>
 </head>
 <body>
@@ -215,7 +121,7 @@
 		String name = request.getParameter("name");
 		
 		try {
-			String jdbcDriver = "jdbc:mysql://54.172.75.243:3306/NightViewDB"
+			String jdbcDriver = "jdbc:mysql://3.88.203.213:3306/NightViewDB"
 					+ "?useUnicode=true&characterEncoding=UTF-8";
 			String dbUser = "mainweb"; //sql id
 			String dbPass = "1234"; //sql pw

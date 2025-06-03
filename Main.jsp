@@ -17,7 +17,7 @@
       color: white;
       margin-top: 20px;
     }
-    .subtitle {
+    .subtitle {	
       text-align: center;
       font-size: 20px;
       font-weight: bold;
@@ -146,47 +146,6 @@
       border-bottom: 2px solid #222; /* 두꺼운 밑줄 */
       padding-bottom: 10px;
       background: transparent;
-    }
-
-    #search-input {
-      border: none;
-      outline: none;
-      background: transparent;
-      font-size: 18px;
-      margin-right: auto;
-      color: #555;
-      width: 120px;
-      text-align: left;
-    }
-
-    #search-form button {
-      border: none;
-      background: transparent;
-      font-size: 18px;
-      color: #555;
-      cursor: pointer;
-      margin-left: auto;
-    }
-
-    #search-results {
-      margin-top: 20px;
-      border-top: 2px solid white;
-    }
-
-    #search-results div {
-      margin-bottom: 10px;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
-
-    #search-results h3 {
-      margin-top: 0;
-    }
-
-    #data-list {
-      display: block;
     }
 
     .gallery-container {
@@ -329,7 +288,6 @@
     #popup-signup:checked ~ .form-popup.signup-form { display: block; }
     #popup-close:checked ~ .form-popup.login-form,
     #popup-close:checked ~ .form-popup.signup-form { display: none; }
-    
     .site-footer {
       width: 100%;
       background: #222;
@@ -340,7 +298,6 @@
       font-size: 1rem;
       letter-spacing: 1px;
     }
-
     .footer-content {
       width: 90%;
       max-width: 1200px;
@@ -350,6 +307,11 @@
       gap: 32px;
       align-items: center;
       text-align: center;
+    }
+        html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
     }
   </style>
 </head>
@@ -400,6 +362,10 @@
 		}
 	</script>
   
-  <%@ include file="Footer.jsp" %> <!-- 푸터 -->
+    <!-- 푸터 -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <span>Websever_B</span>
+      <span>상명대 게임전공 웹서버개발</span>
 </body>
 </html>
