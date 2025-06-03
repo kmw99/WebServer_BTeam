@@ -18,7 +18,7 @@
 	boolean isAdmin = false;
 
 	try {
-		String jdbcDriver = "jdbc:mysql://54.172.75.243:3306/NightViewDB"
+		String jdbcDriver = "jdbc:mysql://3.88.203.213:3306/NightViewDB"
 			+ "?useUnicode=true&characterEncoding=UTF-8";
 		String dbUser = "mainweb";
 		String dbPass = "1234";
