@@ -25,21 +25,6 @@
       align-items: center;
       text-align: center;
     }
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .site-footer {
-      margin-top: auto;
-    }
   </style>
 </head>
 <body>
