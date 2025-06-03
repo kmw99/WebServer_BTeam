@@ -10,19 +10,12 @@
   <meta name="viewport" content="width=device-width">
   <link href="style.css" rel="stylesheet" type="text/css" />
   <style>
-    #search-results {
-      margin-top: 30px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
     .pickresult-box {
       display: flex;
       align-items: center;
       background: white;
       border-radius: 12px;
-      margin: 50px 300px;
+      margin: 25px 300px;
       padding: 20px;
       color: #fff;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);

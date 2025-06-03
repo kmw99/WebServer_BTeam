@@ -22,7 +22,7 @@
 	Class.forName("com.mysql.jdbc.Driver");
 
 	try {
-		String jdbcDriver = "jdbc:mysql://3.88.203.213:3306/NightViewDB"
+		String jdbcDriver = "jdbc:mysql://54.172.75.243:3306/NightViewDB"
 				+ "?useUnicode=true&characterEncoding=UTF-8";
 		String dbUser = "mainweb"; //sql id
 		String dbPass = "1234"; //sql pw
@@ -36,12 +36,6 @@
 		if(!password.equals(passwordcf)) { //비번 다를 때
 			result = -1;
 		}
-		/*
-		else if(id.equals(rs.getString("username"))) { //중복된 아이디일 때
-			out.println("<script>alert('아이디 중복일때');</script>");
-			result = -2;
-		}
-		*/
 		else {
 			ps = conn.prepareStatement("INSERT INTO users values(?, ?, ?)");
 			ps.setInt(1, 0);
@@ -76,14 +70,3 @@
 		out.println("<script>location.href = document.referrer;</script>");
 	}
 %>
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>야경명소</title>
-</head>
-<body>
-
-</body>
-</html>

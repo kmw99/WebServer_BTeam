@@ -35,27 +35,6 @@
       cursor: pointer;
       margin-left: auto;
     }
-
-    #search-results {
-      margin-top: 20px;
-      border-top: 2px solid white;
-    }
-
-    #search-results div {
-      margin-bottom: 10px;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
-
-    #search-results h3 {
-      margin-top: 0;
-    }
-
-    #data-list {
-      display: block;
-    }
   </style>
 </head>
 <body>

@@ -60,14 +60,3 @@
 		out.println("<script>history.back()</script>");
 	}
 %>
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>야경명소</title>
-</head>
-<body>
-
-</body>
-</html>
