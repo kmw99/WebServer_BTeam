@@ -10,19 +10,19 @@
   <meta name="viewport" content="width=device-width">
   <link href="style.css" rel="stylesheet" type="text/css" />
   <style>
-    #search-results {
-      margin-top: 30px;
+    .search-results {
+      align-items: center;
       display: flex;
       flex-direction: column;
       gap: 24px;
     }
-
+	
     .result-box {
       display: flex;
       align-items: center;
       background: white;
       border-radius: 12px;
-      margin: 50px 300px;
+      margin: 25px 300px;
       padding: 20px;
       color: #fff;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
@@ -149,7 +149,7 @@
 	<%@ include file="Header.jsp" %>
 	<%@ include file="SearchForm.jsp" %>
 
-	<div>'<%= searchValue %>'에 관한 결과입니다.</div>
+	<div class="search-results">'<%= searchValue %>'에 관한 결과입니다.</div>
 	<%
 		try {
 			String jdbcDriver = "jdbc:mysql://3.88.203.213:3306/NightViewDB"
