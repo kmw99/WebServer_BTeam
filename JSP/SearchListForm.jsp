@@ -135,7 +135,7 @@
 	<div class="search-results">'<%= searchValue %>'에 관한 결과입니다.</div>
 	<%
 		try {
-			String jdbcDriver = "jdbc:mysql://3.88.203.213:3306/NightViewDB"
+			String jdbcDriver = "jdbc:mysql://54.152.1.123:3306/NightViewDB"
 					+ "?useUnicode=true&characterEncoding=UTF-8";
 			String dbUser = "mainweb"; //sql id
 			String dbPass = "1234"; //sql pw

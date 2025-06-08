@@ -17,7 +17,7 @@ if(userId != null) {
 	
     try {
         Class.forName("com.mysql.jdbc.Driver");
-        String jdbcDriver = "jdbc:mysql://3.88.203.213:3306/NightViewDB?useUnicode=true&characterEncoding=UTF-8";
+        String jdbcDriver = "jdbc:mysql://54.152.1.123:3306/NightViewDB?useUnicode=true&characterEncoding=UTF-8";
         conn = DriverManager.getConnection(jdbcDriver, "mainweb", "1234");
 
         ps = conn.prepareStatement("DELETE FROM favorites WHERE user_id=? AND address_id=?");
