@@ -2,7 +2,7 @@
 <%!
 		public void writeLog( String message, HttpServletRequest request, HttpSession session )
 		{
-			if(message == null) message = "null"
+			if(message == null) message = "null";
 			try 
 			{
 				// 로그 파일 : ex) /var/lib/tomcat8/webapps/ROOT/book/jsp/log.txt, /usr/local/tomcat/webapps/ROOT/book/jsp/log.txt
