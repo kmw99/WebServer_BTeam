@@ -4,6 +4,7 @@
 <%@ page import = "java.sql.PreparedStatement" %>
 <%@ page import = "java.sql.ResultSet" %>
 <%@ page import = "java.sql.SQLException" %>
+<%@ page session="true" %>
 
 <!DOCTYPE html>
 <html>
