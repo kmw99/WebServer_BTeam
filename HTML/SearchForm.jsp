@@ -18,7 +18,7 @@
 </body>
 </html>
 
-<%@ include file="./log.jsp"%>
+<%@ include file="log.jsp"%>
 <%
 	// 로그 데이터 추출
 	writeLog( "새 책을 등록합니다", request, session );

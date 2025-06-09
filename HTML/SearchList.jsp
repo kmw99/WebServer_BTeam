@@ -95,7 +95,7 @@
 </body>
 </html>
 
-<%@ include file="./log.jsp"%>
+<%@ include file="log.jsp"%>
 <%
 	// 로그 데이터 추출
 	writeLog( searchValue , request, session );
